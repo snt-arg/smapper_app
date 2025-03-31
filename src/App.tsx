@@ -1,9 +1,9 @@
-function App() {
-  const title: string = "SMapper Handheld Device"
+import Button from "@mui/material/Button"
 
+function App() {
   return (
     <>
-      <h1 className='text-5xl'>{title}</h1>
+      <Button variant='contained'>Hello World</Button>
     </>
   )
 }
