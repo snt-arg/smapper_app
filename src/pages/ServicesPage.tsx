@@ -1,9 +1,9 @@
-import { fetchServices } from "../api/services/ServiceAPI";
+import { fetchServices } from "../api/ServiceAPI";
 import { useEffect, useState } from "react";
-import { Service } from "../types/Service";
+import { ServiceSchema } from "../types/Service";
 
 const ServicesPage = () => {
-  const [services, setServices] = useState<Service[]>([]); // Store the services
+  const [services, setServices] = useState<ServiceSchema[]>([]); // Store the services
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
