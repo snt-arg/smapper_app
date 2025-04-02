@@ -1,4 +1,4 @@
-export interface Service {
+export interface ServiceSchema {
     id: string;
     name: string;
     status: string;
