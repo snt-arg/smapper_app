@@ -1,10 +1,10 @@
-import SideBar from "../components/SideBar";
+import Sidebar from "@/components/Sidebar";
 import { Outlet } from "react-router-dom";
 
 function AppLayout() {
   return (
     <div className="lg:flex">
-      <SideBar />
+      <Sidebar />
       <main className="lg:flex-1 bg-teal-300 h-screen">
         <Outlet />
       </main>
