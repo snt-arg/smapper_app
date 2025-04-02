@@ -1,6 +1,8 @@
 import { fetchServices } from "../api/ServiceAPI";
 import { useEffect, useState } from "react";
 import { ServiceSchema } from "../types/Service";
+import StatusChip from "../components/StatusBadge";
+import { Button, HStack } from "@chakra-ui/react"
 
 const ServicesPage = () => {
   const [services, setServices] = useState<ServiceSchema[]>([]); // Store the services
@@ -27,14 +29,10 @@ const ServicesPage = () => {
   return (
     <div>
       <h1>Services</h1>
-      <ul>
-        {services.map((service) => (
-          <li key={service.id}>
-            <h2>{service.name}</h2>
-            <p>Status: {service.status}</p>
-          </li>
-        ))}
-      </ul>
+      <HStack>
+        <Button>Click me</Button>
+        <Button>Click me</Button>
+      </HStack>
     </div>
   );
 };
