@@ -1,8 +1,11 @@
+import ServiceDashboard from "@/components/Service";
+import { Container } from "@chakra-ui/react";
+
 function DashboardPage() {
   return (
-    <>
-      <h1>This is the Dashboard</h1>
-    </>
+    <Container h="100vh">
+      <ServiceDashboard />
+    </Container>
   )
 }
 
