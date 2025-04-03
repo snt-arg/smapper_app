@@ -1,17 +1,9 @@
 import { Button, Icon } from "@chakra-ui/react";
 
-
-
-interface BurgerButtonProps {
-  onClick?: () => void;
-  color: string;
-}
-
-export default function BurgerButton({ color }: BurgerButtonProps) {
+export default function BurgerButton() {
   return (
     <Button
       variant="plain"
-      color={color}
     >
       <Icon width={35} height={35}>
         <svg

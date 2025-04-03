@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Navigation, NavLink } from "./Navigation.tsx"
 import { ChartLine, FolderDown, LayoutDashboard, Radio, ServerCog } from "lucide-react";
-import { Box, useBreakpointValue, Text, Drawer, CloseButton, Flex } from "@chakra-ui/react";
+import { Box, useBreakpointValue, Text, Drawer, CloseButton, Flex, HStack } from "@chakra-ui/react";
 import BurgerButton from "../BurgerButton.tsx";
 import { ColorModeButton } from "../ui/color-mode.tsx";
 
@@ -76,9 +76,10 @@ function Mobilebar() {
     >
       <Drawer.Trigger asChild>
         <Box
+          colorPalette="gray"
           width="100vw"
           height="16"
-          bgColor="gray.100"
+          bg={{ base: "colorPalette.100", _dark: "colorPalette.800" }}
         >
           <Flex
             height="100%"
@@ -87,13 +88,15 @@ function Mobilebar() {
             pl={8}
             pr={4}
           >
-            <Text textStyle="3xl">SMapper</Text>
-            <BurgerButton color="black" />
+            <HStack>
+              <Text textStyle="3xl">SMapper</Text>
+            </HStack>
+            <BurgerButton />
           </Flex>
         </Box>
       </Drawer.Trigger>
       <Drawer.Positioner>
-        <Drawer.Content bgColor="gray.100" >
+        <Drawer.Content bgColor={{ base: "colorPalette.100", _dark: "colorPalette.800" }} >
           <Drawer.CloseTrigger />
           <Drawer.Header>
           </Drawer.Header>
@@ -103,6 +106,7 @@ function Mobilebar() {
           <Drawer.CloseTrigger asChild>
             <Flex width="100%" justify="space-between" alignItems="center" pl={8} pr={0}>
               <Text textStyle="3xl">SMapper</Text>
+              <ColorModeButton />
               <CloseButton size="2xl" variant="plain" />
             </Flex>
           </Drawer.CloseTrigger>

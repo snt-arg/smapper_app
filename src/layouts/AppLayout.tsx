@@ -4,12 +4,12 @@ import { Outlet } from "react-router-dom";
 
 function AppLayout() {
   return (
-    <Flex direction="column" lg={{ flexDir: "row", flex: 1 }}>
-      <Sidebar />
-      <Box flex={5} p="4">
+    <Box bg={{ base: "gray.200", _dark: "gray.900" }}>
+      <Flex direction="column" lg={{ flexDir: "row" }}>
+        <Sidebar />
         <Outlet />
-      </Box>
-    </Flex>
+      </Flex>
+    </Box>
   );
 }
 

@@ -5,10 +5,11 @@ export default function Widget({ title, children }: { title: string, children?: 
   return (
     <Box
       colorPalette="gray"
-      bg={{ base: "colorPalette.100", _dark: "colorPalette.800" }}
-      borderColor={{ base: "colorPalette.200", _dark: "colorPalette.500" }}
+      bg={{ base: "colorPalette.300", _dark: "colorPalette.800" }}
+      borderColor={{ base: "colorPalette.500", _dark: "colorPalette.500" }}
       borderRadius={10}
       borderWidth={2}
+      minW="20rem"
       w="sm"
       p="4"
     >
