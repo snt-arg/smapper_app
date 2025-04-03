@@ -4,7 +4,7 @@ import { mockFetchServices } from "@/api/mock/MockServiceAPI";
 import { ServiceSchema } from "@/types/Service";
 
 
-const fetchServices = import.meta.env.DEV ? realFetchServices : mockFetchServices
+const fetchServices = import.meta.env.PROD ? realFetchServices : mockFetchServices
 
 export const useServices = () => {
     const [services, setServices] = useState<ServiceSchema[]>([]);
