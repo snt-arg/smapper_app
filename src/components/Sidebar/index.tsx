@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Navigation, NavLink } from "./Navigation.tsx"
-import { ChartLine, FolderDown, LayoutDashboard, Menu, Radio, ServerCog } from "lucide-react";
-import { Box, useBreakpointValue, Text, Drawer, Button, Portal, CloseButton, Flex, IconButton } from "@chakra-ui/react";
-import Header from "@/components/Header";
+import { ChartLine, FolderDown, LayoutDashboard, Radio, ServerCog } from "lucide-react";
+import { Box, useBreakpointValue, Text, Drawer, CloseButton, Flex } from "@chakra-ui/react";
 import BurgerButton from "../BurgerButton.tsx";
+import { ColorModeButton } from "../ui/color-mode.tsx";
 
 
 const links: NavLink[] = [
@@ -43,18 +43,23 @@ const DesktopBar = () => {
   return (
     <>
       <Box
+        colorPalette="gray"
+        position="sticky"
         left={0}
         p={5}
-        w="65"
+        maxW="65"
         top={0}
         h="100vh"
-        bgColor="gray.100">
+        bgColor={{ base: "colorPalette.100", _dark: "colorPalette.800" }}
+      >
         <Text
+          fontWeight="bold"
           textStyle="4xl"
           textAlign="center"
           mb="5">SMapper</Text>
-        <Box borderBottom={2} borderColor="black" borderWidth={2} mb="5" />
+        <Box borderBottom={2} borderColor={{ base: "black", _dark: "white" }} borderWidth={2} mb="5" />
         <Navigation links={links} />
+        <ColorModeButton position="absolute" bottom={0} left={0} m="3" />
       </Box>
     </>
   );
@@ -88,7 +93,7 @@ function Mobilebar() {
         </Box>
       </Drawer.Trigger>
       <Drawer.Positioner>
-        <Drawer.Content bgColor="gray.100">
+        <Drawer.Content bgColor="gray.100" >
           <Drawer.CloseTrigger />
           <Drawer.Header>
           </Drawer.Header>

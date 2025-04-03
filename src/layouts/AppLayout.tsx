@@ -1,16 +1,16 @@
 import Sidebar from "@/components/Sidebar";
+import { Box, Flex } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 
 function AppLayout() {
   return (
-    <div className="lg:flex">
+    <Flex direction="column" lg={{ flexDir: "row", flex: 1 }}>
       <Sidebar />
-      <main className="lg:flex-1 bg-teal-300 h-screen">
+      <Box flex={5} p="4">
         <Outlet />
-      </main>
-    </div>
+      </Box>
+    </Flex>
   );
 }
 
 export default AppLayout;
-

@@ -16,18 +16,19 @@ export default function NavigationItem({ href, text, icon: Icon, onClick }: NavL
       onClick={onClick}
     >
       {({ isActive }) => (
-        <>
-          <Flex
-            spaceX={3}
-            alignItems="center"
-            bgColor={isActive ? "blue.200" : "transparent"}
-            paddingX="4"
-            paddingY={2}
-            borderRadius="md">
-            <Icon size={25} />
-            <Text textStyle="xl">{text}</Text>
-          </Flex>
-        </>
+        <Flex
+          colorPalette="blue"
+          spaceX={3}
+          alignItems="center"
+          bgColor={isActive ? { base: "colorPalette.300", _dark: "colorPalette.600" } : "transparent"}
+          paddingX="4"
+          paddingY={2}
+          borderRadius="md"
+          _hover={{ base: { bgColor: "colorPalette.200" }, _dark: { bgColor: "colorPalette.400" } }}
+        >
+          <Icon size={25} />
+          <Text textStyle="xl" fontWeight="medium">{text}</Text>
+        </Flex>
       )}
     </NavLink>
   )
