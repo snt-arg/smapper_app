@@ -9,7 +9,7 @@ export const ServiceItem = ({ service }: { service: ServiceSchema }) => (
     <DataList.ItemValue>
       <HStack justify="space-between" w="100%">
         <Text textStyle="lg">{service.name}</Text>
-        <ServiceStatusBadge status={service.status} />
+        <ServiceStatusBadge status={service.state} />
       </HStack>
     </DataList.ItemValue>
   </DataList.Item>

@@ -4,22 +4,22 @@ const services: ServiceSchema[] = [
     {
         id: "ouster",
         name: "Ouster OS 0",
-        status: "Active",
+        state: "Active",
     },
     {
         id: "argus",
         name: "Argus Cameras",
-        status: "Inactive",
+        state: "Inactive",
     },
     {
         id: "realsense",
         name: "Realsnse D435i",
-        status: "Failure",
+        state: "Failure",
     },
     {
         id: "test",
         name: "A test service",
-        status: "terminated",
+        state: "terminated",
     }
 ]
 
@@ -51,7 +51,7 @@ export async function mockStartServiceById(id: string): Promise<ServiceSchema> {
             if (!service) {
                 throw Error("Error finding service with id");
             }
-            service.status = "Active"
+            service.state = "Active"
             resolve(service)
         }, 200)
     })
@@ -64,7 +64,7 @@ export async function mockStopServiceById(id: string): Promise<ServiceSchema> {
             if (!service) {
                 throw Error("Error finding service with id");
             }
-            service.status = "Inactive"
+            service.state = "Inactive"
             resolve(service)
         }, 200)
     })
