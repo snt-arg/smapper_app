@@ -27,7 +27,7 @@ export default function NavigationItem({ href, text, icon: Icon, onClick }: NavL
           _hover={{ base: { bgColor: "colorPalette.200" }, _dark: { bgColor: "colorPalette.400" } }}
         >
           <Icon size={25} />
-          <Text textStyle="xl" fontWeight="medium">{text}</Text>
+          <Text textStyle="lg" fontWeight="medium">{text}</Text>
         </Flex>
       )}
     </NavLink>

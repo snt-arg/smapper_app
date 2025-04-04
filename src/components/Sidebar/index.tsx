@@ -47,7 +47,7 @@ const DesktopBar = () => {
         position="sticky"
         left={0}
         p={5}
-        maxW="65"
+        minW="10em"
         top={0}
         h="100vh"
         bgColor={{ base: "colorPalette.100", _dark: "colorPalette.800" }}
