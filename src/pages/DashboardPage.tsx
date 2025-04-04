@@ -8,7 +8,6 @@ function DashboardPage() {
       <Flex w="100%" gap={5} wrap="wrap" justify={{ base: "center", lg: "center" }}>
         <ServiceDashboard />
         <TopicDashboard />
-        <TopicDashboard />
       </Flex>
     </Container>
   )

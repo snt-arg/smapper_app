@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 
 function AppLayout() {
   return (
-    <Box h="100vh" bg={{ base: "gray.200", _dark: "gray.900" }}>
+    <Box minH="100vh" h="100%" bg={"bg"}>
       <Flex direction="column" lg={{ flexDir: "row" }}>
         <Sidebar />
         <Outlet />

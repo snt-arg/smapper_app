@@ -17,13 +17,13 @@ export default function TopicDashboard() {
 
   return (
     <Widget title="Topics Monitor">
-      <Table.Root >
+      <Table.Root variant="outline">
         <Table.Header>
           <Table.Row>
-            <Table.ColumnHeader bg={{ base: "gray.400", _dark: "gray.900" }}>Name</Table.ColumnHeader>
-            <Table.ColumnHeader hideBelow={"md"} bg={{ base: "gray.400", _dark: "gray.900" }}>Type</Table.ColumnHeader>
-            <Table.ColumnHeader bg={{ base: "gray.400", _dark: "gray.900" }}>Status</Table.ColumnHeader>
-            <Table.ColumnHeader bg={{ base: "gray.400", _dark: "gray.900" }}>Hz</Table.ColumnHeader>
+            <Table.ColumnHeader>Name</Table.ColumnHeader>
+            <Table.ColumnHeader hideBelow={"md"}>Type</Table.ColumnHeader>
+            <Table.ColumnHeader>Status</Table.ColumnHeader>
+            <Table.ColumnHeader textAlign="end">Hz</Table.ColumnHeader>
           </Table.Row>
         </Table.Header>
         <Table.Body>
