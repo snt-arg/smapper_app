@@ -10,7 +10,7 @@ export default function Widget({ title, children }: { title: string, children?: 
       borderRadius={10}
       borderWidth={2}
       minW="20rem"
-      w="sm"
+      w={{ base: "100%", sm: "sm", md: "md" }}
       p="4"
     >
       <Stack w="100%" gapY={6}>
