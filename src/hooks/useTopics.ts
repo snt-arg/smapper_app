@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { fetchTopics as mockFetchTopics } from "@/api/mock/MockRosAPI";
 import { fetchTopics as realFetchTopics } from "@/api/RosAPI";
-import { TopicSchema } from "@/types/Ros";
+import { TopicStatus } from "@/types/ros/Topic";
 
 
 const fetchTopics = import.meta.env.PROD ? realFetchTopics : mockFetchTopics
 
 export const useTopics = () => {
-    const [topics, setTopics] = useState<TopicSchema[]>([]);
+    const [topics, setTopics] = useState<TopicStatus[]>([]);
     const [error, setError] = useState<string>("");
 
     useEffect(() => {

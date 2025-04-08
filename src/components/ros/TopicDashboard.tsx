@@ -23,6 +23,7 @@ export default function TopicDashboard() {
             <Table.ColumnHeader>Name</Table.ColumnHeader>
             <Table.ColumnHeader hideBelow={"md"}>Type</Table.ColumnHeader>
             <Table.ColumnHeader>Status</Table.ColumnHeader>
+            <Table.ColumnHeader hideBelow={"md"}>Subs</Table.ColumnHeader>
             <Table.ColumnHeader textAlign="end">Hz</Table.ColumnHeader>
           </Table.Row>
         </Table.Header>

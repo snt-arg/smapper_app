@@ -1,38 +1,38 @@
-import { TopicSchema } from "@/types/Ros";
+import { TopicStatus } from "@/types/ros/Topic";
 
 
-const topics: TopicSchema[] = [
+const topics: TopicStatus[] = [
     {
         name: "/ouster/points",
         msg_type: "/sensors/msgs/PointCloud2",
         status: "Online",
-        message_count: 100,
+        subscribers: 0,
         hz: 10,
     },
     {
         name: "/ouster/imu",
         msg_type: "/sensors/msgs/Imu",
         status: "Online",
-        message_count: 1000,
+        subscribers: 10,
         hz: 100,
     },
     {
         name: "/camera/front_left/image_raw",
         msg_type: "/sensors/msgs/Image",
         status: "Offline",
-        message_count: 0,
+        subscribers: 10,
         hz: 0,
     },
     {
         name: "/camera/front_right/image_raw",
         msg_type: "/sensors/msgs/Image",
         status: "Online",
-        message_count: 500,
+        subscribers: 10,
         hz: 30,
     },
 ]
 
-export async function fetchTopics(): Promise<TopicSchema[]> {
+export async function fetchTopics(): Promise<TopicStatus[]> {
     return new Promise((resolve) => {
         setTimeout(() => {
             resolve(topics)
@@ -40,7 +40,7 @@ export async function fetchTopics(): Promise<TopicSchema[]> {
     })
 }
 
-export async function fetchTopic(name: string): Promise<TopicSchema> {
+export async function fetchTopic(name: string): Promise<TopicStatus> {
     return new Promise((resolve) => {
         setTimeout(() => {
             const topic = topics.find(item => item.name === name);

@@ -1,6 +1,6 @@
-import { ServiceSchema } from "@/types/Service";
+import { ServiceStatus } from "@/types/Service";
 
-const services: ServiceSchema[] = [
+const services: ServiceStatus[] = [
     {
         id: "ouster",
         name: "Ouster OS 0",
@@ -23,7 +23,7 @@ const services: ServiceSchema[] = [
     }
 ]
 
-export async function mockFetchServices(): Promise<ServiceSchema[]> {
+export async function mockFetchServices(): Promise<ServiceStatus[]> {
     return new Promise((resolve) => {
         setTimeout(() => {
             resolve(services)
@@ -31,7 +31,7 @@ export async function mockFetchServices(): Promise<ServiceSchema[]> {
     })
 }
 
-export async function mockFetchServiceById(id: string): Promise<ServiceSchema> {
+export async function mockFetchService(id: string): Promise<ServiceStatus> {
     return new Promise((resolve) => {
         setTimeout(() => {
             const service = services.find(item => item.id === id);
@@ -44,7 +44,7 @@ export async function mockFetchServiceById(id: string): Promise<ServiceSchema> {
 }
 
 
-export async function mockStartServiceById(id: string): Promise<ServiceSchema> {
+export async function mockStartServiceById(id: string): Promise<ServiceStatus> {
     return new Promise((resolve) => {
         setTimeout(() => {
             const service = services.find(item => item.id === id);
@@ -57,7 +57,7 @@ export async function mockStartServiceById(id: string): Promise<ServiceSchema> {
     })
 }
 
-export async function mockStopServiceById(id: string): Promise<ServiceSchema> {
+export async function mockStopServiceById(id: string): Promise<ServiceStatus> {
     return new Promise((resolve) => {
         setTimeout(() => {
             const service = services.find(item => item.id === id);

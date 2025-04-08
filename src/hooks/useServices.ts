@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { fetchServices as realFetchServices } from "@/api/ServiceAPI";
 import { mockFetchServices } from "@/api/mock/MockServiceAPI";
-import { ServiceSchema } from "@/types/Service";
+import { ServiceStatus } from "@/types/Service";
 
 
 const fetchServices = import.meta.env.PROD ? realFetchServices : mockFetchServices
 
 export const useServices = () => {
-    const [services, setServices] = useState<ServiceSchema[]>([]);
+    const [services, setServices] = useState<ServiceStatus[]>([]);
     const [error, setError] = useState<string>("");
 
     useEffect(() => {

@@ -1,10 +1,10 @@
 import axios from "axios";
-import { TopicSchema } from "../types/Ros";
+import { TopicStatus } from "@/types/ros/Topic";
 
 
 const API_URL_BASE = `${import.meta.env.VITE_API_URL}/api/v1/ros`;
 
-export async function fetchTopics(): Promise<TopicSchema[]> {
+export async function fetchTopics(): Promise<TopicStatus[]> {
 
     const url: string = `${API_URL_BASE}/topics`;
 
@@ -17,7 +17,7 @@ export async function fetchTopics(): Promise<TopicSchema[]> {
     }
 }
 
-export async function fetchTopic(name: string): Promise<TopicSchema> {
+export async function fetchTopic(name: string): Promise<TopicStatus> {
 
     const url: string = `${API_URL_BASE}/topics/${name}`;
 
@@ -30,7 +30,7 @@ export async function fetchTopic(name: string): Promise<TopicSchema> {
     }
 }
 
-export async function addTopicToMonitor(name: string): Promise<TopicSchema> {
+export async function addTopicToMonitor(name: string): Promise<TopicStatus> {
 
     const url: string = `${API_URL_BASE}/topics/?topic_name=${name}`;
 
@@ -43,7 +43,7 @@ export async function addTopicToMonitor(name: string): Promise<TopicSchema> {
     }
 }
 
-export async function removeTopicToMonitor(name: string): Promise<TopicSchema> {
+export async function removeTopicToMonitor(name: string): Promise<TopicStatus> {
 
     const url: string = `${API_URL_BASE}/topics/?topic_name=${name}`;
 

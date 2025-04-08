@@ -1,4 +1,4 @@
-import { SensorSchema } from "../types/Sensor";
+import { SensorMetadata } from "../types/Sensor";
 import axios from "axios";
 
 const API_URL_BASE = `${import.meta.env.VITE_API_URL}/api/v1/sensors`;
@@ -8,7 +8,7 @@ const API_URL_BASE = `${import.meta.env.VITE_API_URL}/api/v1/sensors`;
  *
  * @returns {Promise<ServiceSchema[]>} A promise which returns an array of sensors.
  */
-export async function fetchSensors(): Promise<SensorSchema[]> {
+export async function fetchSensors(): Promise<SensorMetadata[]> {
     try {
         const response = await axios.get(API_URL_BASE);
         return response.data;
@@ -24,7 +24,7 @@ export async function fetchSensors(): Promise<SensorSchema[]> {
  * @param id {string} Id of the sensor to fetch
  * @returns {Promise<ServiceSchema[]>} A promise which returns the Sensor metadata.
  */
-export async function fetchServiceById(id: string): Promise<SensorSchema> {
+export async function fetchServiceById(id: string): Promise<SensorMetadata> {
     try {
         const response = await axios.get(`${API_URL_BASE}/${id}`);
         return response.data;
