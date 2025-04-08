@@ -6,10 +6,8 @@ import { ChakraProvider } from '@chakra-ui/react'
 import { ColorModeProvider } from './components/ui/color-mode.tsx';
 import createSystem from '@/theme.ts';
 
-
-
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+const renderApp = (isProduction: boolean) => {
+  const AppComponent = (
     <ChakraProvider value={createSystem}>
       <ColorModeProvider>
         <BrowserRouter>
@@ -17,5 +15,16 @@ createRoot(document.getElementById('root')!).render(
         </BrowserRouter>
       </ColorModeProvider>
     </ChakraProvider>
-  </StrictMode>,
-)
+  );
+
+  if (isProduction) {
+    return createRoot(document.getElementById('root')!).render(AppComponent);
+  } else {
+    return createRoot(document.getElementById('root')!).render(
+      <StrictMode>{AppComponent}</StrictMode>
+    );
+  }
+};
+
+renderApp(import.meta.env.PROD);
+

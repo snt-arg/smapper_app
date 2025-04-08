@@ -1,10 +1,13 @@
 import { Routes, Route } from 'react-router-dom'
 import AppLayout from './layouts/AppLayout';
-import DashboardPage from './pages/DashboardPage';
-import ServicesPage from './pages/ServicesPage';
-import SensorsPage from './pages/SensorsPage';
-import RecordingsPage from './pages/RecordingsPage';
-import VisualizerPage from './pages/VisualizerPage';
+import { lazy } from "react"
+
+
+const DashboardPage = lazy(() => import("@/pages/DashboardPage"))
+const ServicesPage = lazy(() => import("@/pages/ServicesPage"))
+const VisualizerPage = lazy(() => import("@/pages/VisualizerPage"))
+const RecordingsPage = lazy(() => import("@/pages/RecordingsPage"))
+const SensorsPage = lazy(() => import("@/pages/SensorsPage"))
 
 function App() {
   return (
