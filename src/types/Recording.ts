@@ -40,7 +40,7 @@ export interface RecordingStartRequest {
  * Indicates the state of the recording and optionally includes metadata.
  * 
  * @interface RecordingStatus
- * @property {string} state - The current state of the recording (e.g., "active", "stopped").
+ * @property {string} state - The current state of the recording (e.g., "Idle", "Recording").
  * @property {RecordingMetadata} [metadata] - Optional metadata for the recording session.
  */
 export interface RecordingStatus {
