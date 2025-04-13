@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { Box, Text, Drawer, CloseButton, Flex, HStack } from "@chakra-ui/react";
-import { Navigation, NavLink } from "./Navigation.tsx"
-import { ColorModeButton } from "@/components/ui/color-mode.tsx";
-import BurgerButton from "@/components/BurgerButton.tsx";
+import { useState } from 'react'
+import { Box, Text, Drawer, CloseButton, Flex, HStack } from '@chakra-ui/react'
+import { Navigation, NavLink } from './Navigation.tsx'
+import { ColorModeButton } from '@/components/ui/color-mode.tsx'
+import BurgerButton from '@/components/BurgerButton.tsx'
 
 function Mobilebar({ links }: { links: NavLink[] }) {
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [isSidebarOpen, setSidebarOpen] = useState(false)
   return (
     <Drawer.Root
       size="full"
@@ -14,11 +14,7 @@ function Mobilebar({ links }: { links: NavLink[] }) {
       onOpenChange={(e) => setSidebarOpen(e.open)}
     >
       <Drawer.Trigger asChild>
-        <Box
-          width="100vw"
-          height="16"
-          bg={"bg.emphasized"}
-        >
+        <Box width="100vw" height="16" bg={'bg.emphasized'}>
           <Flex
             height="100%"
             justify="space-between"
@@ -34,15 +30,20 @@ function Mobilebar({ links }: { links: NavLink[] }) {
         </Box>
       </Drawer.Trigger>
       <Drawer.Positioner>
-        <Drawer.Content bgColor={"bg.emphasized"} >
+        <Drawer.Content bgColor={'bg.emphasized'}>
           <Drawer.CloseTrigger />
-          <Drawer.Header>
-          </Drawer.Header>
+          <Drawer.Header></Drawer.Header>
           <Drawer.Body mt={35}>
             <Navigation links={links} onClick={() => setSidebarOpen(false)} />
           </Drawer.Body>
           <Drawer.CloseTrigger asChild>
-            <Flex width="100%" justify="space-between" alignItems="center" pl={8} pr={0}>
+            <Flex
+              width="100%"
+              justify="space-between"
+              alignItems="center"
+              pl={8}
+              pr={0}
+            >
               <Text textStyle="3xl">SMapper</Text>
               <ColorModeButton />
               <CloseButton size="2xl" variant="plain" />
@@ -51,7 +52,7 @@ function Mobilebar({ links }: { links: NavLink[] }) {
         </Drawer.Content>
       </Drawer.Positioner>
     </Drawer.Root>
-  );
+  )
 }
 
-export default Mobilebar;
+export default Mobilebar

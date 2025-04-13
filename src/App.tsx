@@ -1,14 +1,13 @@
 import { Routes, Route } from 'react-router-dom'
-import AppLayout from './layouts/AppLayout';
-import { lazy } from "react"
-import { Toaster } from './components/ui/toaster';
+import AppLayout from './layouts/AppLayout'
+import { lazy } from 'react'
+import { Toaster } from './components/ui/toaster'
 
-
-const DashboardPage = lazy(() => import("@/pages/DashboardPage"))
-const ServicesPage = lazy(() => import("@/pages/ServicesPage"))
-const VisualizerPage = lazy(() => import("@/pages/VisualizerPage"))
-const RecordingsPage = lazy(() => import("@/pages/RecordingsPage"))
-const SensorsPage = lazy(() => import("@/pages/SensorsPage"))
+const DashboardPage = lazy(() => import('@/pages/DashboardPage'))
+const ServicesPage = lazy(() => import('@/pages/ServicesPage'))
+const VisualizerPage = lazy(() => import('@/pages/VisualizerPage'))
+const RecordingsPage = lazy(() => import('@/pages/RecordingsPage'))
+const SensorsPage = lazy(() => import('@/pages/SensorsPage'))
 
 function App() {
   return (
@@ -24,8 +23,7 @@ function App() {
       </Routes>
       <Toaster />
     </>
-
-  );
+  )
 }
 
-export default App;
+export default App

@@ -1,16 +1,14 @@
-import { Stack } from "@chakra-ui/react"
-import NavigationItem from "./NavLinkItem"
-
+import { Stack } from '@chakra-ui/react'
+import NavigationItem from './NavLinkItem'
 
 export interface NavLink {
-  href: string,
-  text: string,
-  icon: React.ElementType,
+  href: string
+  text: string
+  icon: React.ElementType
 }
 
-
 interface Props {
-  links: NavLink[],
+  links: NavLink[]
   onClick?: () => void
 }
 
@@ -27,8 +25,7 @@ export function Navigation({ links, onClick }: Props) {
         />
       ))}
     </Stack>
-
-  );
+  )
 }
 
-export default Navigation;
+export default Navigation

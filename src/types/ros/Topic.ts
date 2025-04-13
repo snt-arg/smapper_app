@@ -1,6 +1,6 @@
 /**
  * Represents the status of a topic in a messaging system.
- * 
+ *
  * @interface TopicStatus
  * @property {string} status - The current status of the topic (e.g., "Online", "Offline").
  * @property {string} name - The name of the topic.
@@ -9,10 +9,9 @@
  * @property {number} subscribers - The number of subscribers to the topic.
  */
 export interface TopicStatus {
-    status: string;
-    name: string;
-    msg_type: string;
-    hz: number;
-    subscribers: number;
+  status: string
+  name: string
+  msg_type: string
+  hz: number
+  subscribers: number
 }
-

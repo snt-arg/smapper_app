@@ -6,4 +6,4 @@ function SensorsPage() {
   )
 }
 
-export default SensorsPage;
+export default SensorsPage

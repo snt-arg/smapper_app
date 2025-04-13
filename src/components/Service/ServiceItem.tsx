@@ -1,11 +1,11 @@
-import { Text, HStack } from "@chakra-ui/react"; // or your preferred UI library
-import ServiceStatusBadge from "@/components/Service/ServiceStatusBadge"; // Assuming this is another component
-import { ServiceStatus } from "@/types/Service";
-import { DataList } from "@chakra-ui/react";
+import { Text, HStack } from '@chakra-ui/react' // or your preferred UI library
+import ServiceStatusBadge from '@/components/Service/ServiceStatusBadge' // Assuming this is another component
+import { ServiceStatus } from '@/types/Service'
+import { DataList } from '@chakra-ui/react'
 
 export const ServiceItem = ({ service }: { service: ServiceStatus }) => (
   <DataList.Item key={service.id}>
-    <DataList.ItemLabel textStyle={"lg"}>{service.id}</DataList.ItemLabel>
+    <DataList.ItemLabel textStyle={'lg'}>{service.id}</DataList.ItemLabel>
     <DataList.ItemValue>
       <HStack justify="space-between" w="100%">
         <Text textStyle="md">{service.name}</Text>
@@ -13,5 +13,4 @@ export const ServiceItem = ({ service }: { service: ServiceStatus }) => (
       </HStack>
     </DataList.ItemValue>
   </DataList.Item>
-);
-
+)

@@ -1,18 +1,18 @@
-import Widget from "@/components/Widget"; // Assuming Widget is your UI container
-import { DataList } from "@chakra-ui/react"; // Assume this component displays the list
-import { ErrorMessage } from "@/components/ErrorMessage"; // The error component
-import { ServiceItem } from "./ServiceItem"; // The service item component
-import { useServices } from "@/hooks/useServices"; // The custom hook for fetching services
+import Widget from '@/components/Widget' // Assuming Widget is your UI container
+import { DataList } from '@chakra-ui/react' // Assume this component displays the list
+import { ErrorMessage } from '@/components/ErrorMessage' // The error component
+import { ServiceItem } from './ServiceItem' // The service item component
+import { useServices } from '@/hooks/useServices' // The custom hook for fetching services
 
 export default function ServiceDashboard() {
-  const { services, error } = useServices();
+  const { services, error } = useServices()
 
   if (error) {
     return (
       <Widget title="Services">
         <ErrorMessage message={error} />
       </Widget>
-    );
+    )
   }
 
   return (
@@ -23,5 +23,5 @@ export default function ServiceDashboard() {
         ))}
       </DataList.Root>
     </Widget>
-  );
+  )
 }

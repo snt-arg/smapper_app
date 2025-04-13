@@ -1,7 +1,7 @@
-import { ServiceStatus } from "../types/Service";
-import axios from "axios";
+import { ServiceStatus } from '../types/Service'
+import axios from 'axios'
 
-const BASE_URL = `${import.meta.env.VITE_API_URL}/services`;
+const BASE_URL = `${import.meta.env.VITE_API_URL}/services`
 
 /**
  * Fetch all services from the API.
@@ -9,13 +9,13 @@ const BASE_URL = `${import.meta.env.VITE_API_URL}/services`;
  * @returns {Promise<ServiceStatus[]>} A promise which returns an array of services.
  */
 export async function fetchServices(): Promise<ServiceStatus[]> {
-    try {
-        const response = await axios.get(BASE_URL);
-        return response.data;
-    } catch (error) {
-        console.error("Error fetching services:", error);
-        throw error;
-    }
+  try {
+    const response = await axios.get(BASE_URL)
+    return response.data
+  } catch (error) {
+    console.error('Error fetching services:', error)
+    throw error
+  }
 }
 
 /**
@@ -25,15 +25,14 @@ export async function fetchServices(): Promise<ServiceStatus[]> {
  * @returns {Promise<ServiceStatus[]>} A promise which returns the Service metadata.
  */
 export async function fetchService(id: string): Promise<ServiceStatus> {
-    try {
-        const response = await axios.get(`${BASE_URL}/${id}`);
-        return response.data;
-    } catch (error) {
-        console.error("Error fetching services:", error);
-        throw error;
-    }
+  try {
+    const response = await axios.get(`${BASE_URL}/${id}`)
+    return response.data
+  } catch (error) {
+    console.error('Error fetching services:', error)
+    throw error
+  }
 }
-
 
 /**
  * Sends a request to API to start the service by id.
@@ -42,13 +41,13 @@ export async function fetchService(id: string): Promise<ServiceStatus> {
  * @returns {Promise<ServiceSchema[]>} A promise which returns the Service metadata of the started service.
  */
 export async function startService(id: string): Promise<ServiceStatus> {
-    try {
-        const response = await axios.post(`${BASE_URL}/${id}/start`);
-        return response.data;
-    } catch (error) {
-        console.error("Error starting service:", error);
-        throw error;
-    }
+  try {
+    const response = await axios.post(`${BASE_URL}/${id}/start`)
+    return response.data
+  } catch (error) {
+    console.error('Error starting service:', error)
+    throw error
+  }
 }
 
 /**
@@ -58,11 +57,11 @@ export async function startService(id: string): Promise<ServiceStatus> {
  * @returns {Promise<ServiceSchema[]>} A promise which returns the Service metadata of the stopped service.
  */
 export async function stopService(id: string): Promise<ServiceStatus> {
-    try {
-        const response = await axios.post(`${BASE_URL}/${id}/stop`);
-        return response.data;
-    } catch (error) {
-        console.error("Error stopping service:", error);
-        throw error;
-    }
+  try {
+    const response = await axios.post(`${BASE_URL}/${id}/stop`)
+    return response.data
+  } catch (error) {
+    console.error('Error stopping service:', error)
+    throw error
+  }
 }

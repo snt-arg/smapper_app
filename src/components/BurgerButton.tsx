@@ -1,10 +1,8 @@
-import { Button, Icon } from "@chakra-ui/react";
+import { Button, Icon } from '@chakra-ui/react'
 
 export default function BurgerButton() {
   return (
-    <Button
-      variant="plain"
-    >
+    <Button variant="plain">
       <Icon width={35} height={35}>
         <svg
           fill="none"
@@ -16,11 +14,10 @@ export default function BurgerButton() {
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth="2"
-            d={"M4 6h16M4 12h16m-7 6h7"}
+            d={'M4 6h16M4 12h16m-7 6h7'}
           ></path>
         </svg>
       </Icon>
     </Button>
-  );
+  )
 }
-
