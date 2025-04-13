@@ -25,7 +25,7 @@ const links: NavLink[] = [
   {
     href: "/recordings",
     icon: FolderDown,
-    text: "Data Collection"
+    text: "Recordings"
   },
   {
     href: "/sensors",
