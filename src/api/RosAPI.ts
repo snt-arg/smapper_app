@@ -2,11 +2,11 @@ import axios from "axios";
 import { TopicStatus } from "@/types/ros/Topic";
 
 
-const API_URL_BASE = `${import.meta.env.VITE_API_URL}/api/v1/ros`;
+const BASE_URL = `${import.meta.env.VITE_API_URL}/ros`;
 
 export async function fetchTopics(): Promise<TopicStatus[]> {
 
-    const url: string = `${API_URL_BASE}/topics`;
+    const url: string = `${BASE_URL}/topics`;
 
     try {
         const response = await axios.get(url);
@@ -19,7 +19,7 @@ export async function fetchTopics(): Promise<TopicStatus[]> {
 
 export async function fetchTopic(name: string): Promise<TopicStatus> {
 
-    const url: string = `${API_URL_BASE}/topics/${name}`;
+    const url: string = `${BASE_URL}/topics/${name}`;
 
     try {
         const response = await axios.get(url);
@@ -32,7 +32,7 @@ export async function fetchTopic(name: string): Promise<TopicStatus> {
 
 export async function addTopicToMonitor(name: string): Promise<TopicStatus> {
 
-    const url: string = `${API_URL_BASE}/topics/?topic_name=${name}`;
+    const url: string = `${BASE_URL}/topics/?topic_name=${name}`;
 
     try {
         const response = await axios.post(url);
@@ -45,7 +45,7 @@ export async function addTopicToMonitor(name: string): Promise<TopicStatus> {
 
 export async function removeTopicToMonitor(name: string): Promise<TopicStatus> {
 
-    const url: string = `${API_URL_BASE}/topics/?topic_name=${name}`;
+    const url: string = `${BASE_URL}/topics/?topic_name=${name}`;
 
     try {
         const response = await axios.delete(url);

@@ -1,7 +1,7 @@
 import { SensorMetadata } from "../types/Sensor";
 import axios from "axios";
 
-const API_URL_BASE = `${import.meta.env.VITE_API_URL}/api/v1/sensors`;
+const BASE_URL = `${import.meta.env.VITE_API_URL}/sensors`;
 
 /**
  * Fetch all sensors from the API.
@@ -10,7 +10,7 @@ const API_URL_BASE = `${import.meta.env.VITE_API_URL}/api/v1/sensors`;
  */
 export async function fetchSensors(): Promise<SensorMetadata[]> {
     try {
-        const response = await axios.get(API_URL_BASE);
+        const response = await axios.get(BASE_URL);
         return response.data;
     } catch (error) {
         console.error("Error fetching sensors:", error);
@@ -26,7 +26,7 @@ export async function fetchSensors(): Promise<SensorMetadata[]> {
  */
 export async function fetchServiceById(id: string): Promise<SensorMetadata> {
     try {
-        const response = await axios.get(`${API_URL_BASE}/${id}`);
+        const response = await axios.get(`${BASE_URL}/${id}`);
         return response.data;
     } catch (error) {
         console.error("Error fetching sensors:", error);
