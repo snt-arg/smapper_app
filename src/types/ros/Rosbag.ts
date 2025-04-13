@@ -8,7 +8,7 @@
  * @property {string} msg_type - The message type of the topic.
  */
 export interface RosbagTopic {
-    id: string;
+    id: number;
     name: string;
     msg_type: string;
 }
@@ -29,14 +29,14 @@ export interface RosbagTopic {
  * @property {RosbagTopic[]} topics - The topics contained within the ROS bag file.
  */
 export interface RosbagMetadata {
-    id: string;
+    id: number;
     name: string;
     size: number;
     duration: number;
     start_time: number;
     end_time: number;
     detail: string;
-    tags: string[];
+    tags?: string[];
     topics: RosbagTopic[];
 }
 
