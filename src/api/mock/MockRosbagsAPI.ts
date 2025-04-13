@@ -9,15 +9,7 @@ const rosbags: RosbagMetadata[] = [
     start_time: 1744189961,
     end_time: 1744191161,
     detail: 'Recording of the morning drive around the city',
-    tags: [
-      'driving',
-      'morning',
-      'city',
-      'morning',
-      'morning',
-      'morning',
-      'morning',
-    ],
+    tags: 'driving',
     topics: [
       {
         id: 0,
@@ -35,7 +27,7 @@ const rosbags: RosbagMetadata[] = [
     start_time: 1744189961,
     end_time: 1744191161,
     detail: 'Testing the device on an obstacle course',
-    tags: ['testing', 'obstacles'],
+    tags: 'testing,obstacles',
     topics: [
       {
         id: 2,
@@ -54,7 +46,6 @@ const rosbags: RosbagMetadata[] = [
     end_time: 1744191161,
     detail:
       'This is a very long description of the rosbag which is supposed to show how this looks like in the rosbag card.',
-    tags: ['testing', 'obstacles'],
     topics: [
       {
         id: 4,
@@ -75,7 +66,6 @@ const rosbags: RosbagMetadata[] = [
     start_time: 1744189961,
     end_time: 1744191161,
     detail: 'Testing the device on an obstacle course',
-    tags: ['testing', 'obstacles'],
     topics: [
       {
         id: 9,
@@ -93,7 +83,7 @@ const rosbags: RosbagMetadata[] = [
     start_time: 1744189961,
     end_time: 1744191161,
     detail: 'Testing the device on an obstacle course',
-    tags: ['testing', 'obstacles'],
+    tags: 'testing,obstacles',
     topics: [
       {
         id: 11,
@@ -111,7 +101,7 @@ const rosbags: RosbagMetadata[] = [
     start_time: 1744189961,
     end_time: 1744191161,
     detail: 'Testing the device on an obstacle course',
-    tags: ['testing', 'obstacles'],
+    tags: 'testing,obstacles',
     topics: [
       {
         id: 13,

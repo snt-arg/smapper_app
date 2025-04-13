@@ -10,7 +10,7 @@ const BASE_URL = `${import.meta.env.VITE_API_URL}/sensors`
  */
 export async function fetchSensors(): Promise<SensorMetadata[]> {
   try {
-    const response = await axios.get(BASE_URL)
+    const response = await axios.get(BASE_URL + "/")
     return response.data
   } catch (error) {
     console.error('Error fetching sensors:', error)
@@ -26,7 +26,7 @@ export async function fetchSensors(): Promise<SensorMetadata[]> {
  */
 export async function fetchServiceById(id: string): Promise<SensorMetadata> {
   try {
-    const response = await axios.get(`${BASE_URL}/${id}`)
+    const response = await axios.get(`${BASE_URL}/${id}/`)
     return response.data
   } catch (error) {
     console.error('Error fetching sensors:', error)

@@ -36,7 +36,7 @@ export interface RosbagMetadata {
   start_time: number
   end_time: number
   detail: string
-  tags?: string[]
+  tags?: string
   topics: RosbagTopic[]
 }
 

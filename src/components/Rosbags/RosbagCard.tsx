@@ -1,3 +1,4 @@
+import { deleteRosbag } from '@/api/RosbagsAPI'
 import { RosbagMetadata } from '@/types/ros/Rosbag'
 import {
   Badge,
@@ -8,14 +9,24 @@ import {
   Text,
   Tag,
   Show,
-  Box,
-  Checkbox,
   Button,
   Flex,
+  Stack,
 } from '@chakra-ui/react'
 import { DatabaseIcon, TimerIcon } from 'lucide-react'
 import { useState } from 'react'
-import { resolvePath } from 'react-router-dom'
+
+const delRosbag = (id: number) => {
+  const callDelete = async () => {
+    try {
+      await deleteRosbag(id)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  callDelete()
+}
 
 const formatTimestamp = (timestamp: number): string => {
   const date = new Date(timestamp * 1000)
@@ -42,19 +53,19 @@ const Body = ({ rosbag }: { rosbag: RosbagMetadata }) => {
 
   return (
     <Card.Body flexDir="column" spaceY="2">
-      {rosbag.detail}
-      <Card.Description flexDir="column">
+      <Text textStyle="sm">{rosbag.detail}</Text>
+      <Stack flexDir="column">
         <Show when={expanded}>
-          <Heading size="md" mt="5" mb="2">
+          <Text textStyle="md" mt="5" mb="2">
             Topics{' '}
-          </Heading>
+          </Text>
           <List.Root pl="5">
             {rosbag.topics.map((topic) => (
               <List.Item key={topic.id}>{topic.name}</List.Item>
             ))}
           </List.Root>
         </Show>
-      </Card.Description>
+      </Stack>
 
       <Flex justifyContent="flex-end" w="100%">
         <Button
@@ -91,15 +102,19 @@ const Footer = ({ rosbag }: { rosbag: RosbagMetadata }) => (
     </HStack>
 
     <HStack wrap="wrap" w="100%">
-      {rosbag.tags?.map((tag, key) => (
-        <Badge variant="outline" textStyle="sm" key={key}>
-          {tag}
-        </Badge>
-      ))}
+      {rosbag.tags &&
+        rosbag.tags !== '' &&
+        rosbag.tags?.split(',').map((tag, key) => (
+          <Badge variant="outline" textStyle="sm" key={key}>
+            {tag}
+          </Badge>
+        ))}
     </HStack>
 
     <HStack w="100%" justifyContent="flex-end">
-      <Button variant="outline">Delete</Button>
+      <Button variant="outline" onClick={() => delRosbag(rosbag.id)}>
+        Delete
+      </Button>
       <Button>Update</Button>
     </HStack>
   </Card.Footer>

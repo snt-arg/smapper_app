@@ -1,15 +1,5 @@
-import {
-  Table,
-  Checkbox,
-  Tag,
-  Stack,
-  VStack,
-  Flex,
-  Accordion,
-} from '@chakra-ui/react' // or your preferred UI library
+import { Table, Tag, Accordion } from '@chakra-ui/react'
 import { RosbagMetadata } from '@/types/ros/Rosbag'
-import { Badge } from 'lucide-react'
-import { toaster } from '../ui/toaster'
 
 const formatTimestamp = (timestamp: number): string => {
   return new Date(timestamp * 1000).toLocaleString()
@@ -42,7 +32,7 @@ export const RosbagItem = ({ rosbag }: { rosbag: RosbagMetadata }) => {
             <Table.Cell>{rosbag.name}</Table.Cell>
             <Table.Cell>{start_date}</Table.Cell>
             <Table.Cell>
-              {rosbag.tags?.map((tag) => (
+              {rosbag.tags?.split(',').map((tag) => (
                 <Tag.Root>
                   <Tag.Label>{tag}</Tag.Label>
                 </Tag.Root>

@@ -1,15 +1,10 @@
 import {
   Skeleton,
-  Table,
-  Container,
-  Stack,
-  Grid,
   SimpleGrid,
   useBreakpointValue,
   Button,
   HStack,
 } from '@chakra-ui/react'
-import { RosbagItem } from './RosbagItem'
 import { useRosbags } from '@/hooks/useRosbags'
 import { toaster } from '@/components/ui/toaster'
 import RosbagCard from './RosbagCard'
@@ -19,7 +14,7 @@ import {
   startRecording,
   stopRecording,
 } from '@/api/RecordApi'
-import { RecordingStatus } from '@/types/Recording'
+import { RecordingStartRequest, RecordingStatus } from '@/types/Recording'
 import RecordingModal from './RosbagCreateModal'
 
 export default function RosbagList() {
@@ -48,6 +43,7 @@ export default function RosbagList() {
         }
 
         if (recordingStatus?.metadata) {
+          setElapsedTime(recordingStatus.metadata?.elapsed_time)
           const elapsed = formatTime(recordingStatus.metadata?.elapsed_time)
           if (recordingToastId.current)
             toaster.update(recordingToastId.current, {
@@ -60,10 +56,10 @@ export default function RosbagList() {
     return () => clearInterval(interval)
   }, [elapsedTime, recordingToastId, isRecording, recordingStatus])
 
-  const handleStartRecording = async () => {
+  const handleStartRecording = async (bag: RecordingStartRequest) => {
     console.log('Starting....')
     try {
-      const status = await startRecording()
+      const status = await startRecording(bag)
       setRecordingStatus(status)
       setIsRecording(true)
       setElapsedTime(0)
@@ -120,11 +116,12 @@ export default function RosbagList() {
   }
 
   return (
-    <Skeleton loading={loading}>
-      <HStack mb={4} gap={4}>
+    <Skeleton loading={loading} divideY="2px">
+      <HStack mb={4} gap={4} w="100%">
         <RecordingModal disabled={isRecording} onStart={handleStartRecording} />
         <Button
           disabled={!isRecording}
+          size={{ base: 'xs', sm: 'lg' }}
           colorPalette="red"
           onClick={handleStopRecording}
         >
@@ -132,7 +129,7 @@ export default function RosbagList() {
         </Button>
       </HStack>
 
-      <SimpleGrid columns={columns} gap="4">
+      <SimpleGrid columns={columns} gap="4" pt="4">
         {data.map((rosbag) => (
           <RosbagCard rosbag={rosbag} key={rosbag.id} />
         ))}

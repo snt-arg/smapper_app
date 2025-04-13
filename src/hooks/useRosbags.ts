@@ -3,7 +3,7 @@ import { fetchRosbags as mockFetchRosbags } from '@/api/mock/MockRosbagsAPI'
 import { fetchRosbags as realFetchRosbags } from '@/api/RosbagsAPI'
 import { RosbagMetadata } from '@/types/ros/Rosbag'
 
-const fetchRosbags = import.meta.env.PROD ? realFetchRosbags : mockFetchRosbags
+const fetchRosbags = import.meta.env.DEV ? realFetchRosbags : mockFetchRosbags
 
 export const useRosbags = () => {
   const [data, setData] = useState<RosbagMetadata[]>([])

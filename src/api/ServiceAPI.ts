@@ -10,7 +10,7 @@ const BASE_URL = `${import.meta.env.VITE_API_URL}/services`
  */
 export async function fetchServices(): Promise<ServiceStatus[]> {
   try {
-    const response = await axios.get(BASE_URL)
+    const response = await axios.get(BASE_URL + "/")
     return response.data
   } catch (error) {
     console.error('Error fetching services:', error)
@@ -26,7 +26,7 @@ export async function fetchServices(): Promise<ServiceStatus[]> {
  */
 export async function fetchService(id: string): Promise<ServiceStatus> {
   try {
-    const response = await axios.get(`${BASE_URL}/${id}`)
+    const response = await axios.get(`${BASE_URL}/${id}/`)
     return response.data
   } catch (error) {
     console.error('Error fetching services:', error)
@@ -42,7 +42,7 @@ export async function fetchService(id: string): Promise<ServiceStatus> {
  */
 export async function startService(id: string): Promise<ServiceStatus> {
   try {
-    const response = await axios.post(`${BASE_URL}/${id}/start`)
+    const response = await axios.post(`${BASE_URL}/${id}/start/`)
     return response.data
   } catch (error) {
     console.error('Error starting service:', error)
@@ -58,7 +58,7 @@ export async function startService(id: string): Promise<ServiceStatus> {
  */
 export async function stopService(id: string): Promise<ServiceStatus> {
   try {
-    const response = await axios.post(`${BASE_URL}/${id}/stop`)
+    const response = await axios.post(`${BASE_URL}/${id}/stop/`)
     return response.data
   } catch (error) {
     console.error('Error stopping service:', error)
