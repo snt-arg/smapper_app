@@ -4,18 +4,22 @@ import { TopicStatus } from '@/features/topics/types/Topic'
 
 export const useTopics = () => {
   const [topics, setTopics] = useState<TopicStatus[]>([])
-  const [error, setError] = useState<string>('')
+  const [error, setError] = useState<string>()
+  const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
     const getTopics = async () => {
       try {
         const data = await TopicApi.getTopics()
         setTopics(data)
-        setError('') // Reset error if successful
       } catch (error) {
-        console.error('Error fetching topics:', error)
-        setError('Could not fetch services')
-        setTopics([]) // Reset the services on error
+        if (error instanceof Error) {
+          setError(error.message)
+        } else {
+          setError('An unknown error occurred')
+        }
+      } finally {
+        setLoading(false)
       }
     }
 
@@ -28,5 +32,5 @@ export const useTopics = () => {
     return () => clearInterval(interval)
   }, [])
 
-  return { topics: topics, error }
+  return { topics, error, loading }
 }

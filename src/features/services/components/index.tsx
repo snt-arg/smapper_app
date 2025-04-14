@@ -7,8 +7,6 @@ import { useServices } from '@/features/services/hooks/useServices' // The custo
 export default function ServiceDashboard() {
   const { services, error } = useServices()
 
-  console.log('Services:', services)
-
   if (error) {
     return (
       <Widget title="Services">

@@ -2,16 +2,30 @@ import { RecordingStartRequest } from '@/features/recording/types/Recording'
 import { RecordingStatus } from '@/features/recording/types/Recording'
 import client from '@/shared/api/client'
 
-function getRecordingStatus(): Promise<RecordingStatus> {
-  return client.get('/recording/status/')
+async function getRecordingStatus(): Promise<RecordingStatus> {
+  const response = await client.get('/recording/status/')
+  if (response.status === 200) {
+    return response.data
+  }
+  throw new Error('Failed to get recording status')
 }
 
-function startRecording(data: RecordingStartRequest): Promise<RecordingStatus> {
-  return client.post('/recording/start/', data)
+async function startRecording(
+  data: RecordingStartRequest
+): Promise<RecordingStatus> {
+  const response = await client.post('/recording/start/', data)
+  if (response.status === 200) {
+    return response.data
+  }
+  throw new Error('Failed to get recording status')
 }
 
-function stopRecording(): Promise<RecordingStatus> {
-  return client.post('/recording/stop/')
+async function stopRecording(): Promise<RecordingStatus> {
+  const response = await client.post('/recording/stop/')
+  if (response.status === 200) {
+    return response.data
+  }
+  throw new Error('Failed to get recording status')
 }
 
 export const RecordingAPI = {

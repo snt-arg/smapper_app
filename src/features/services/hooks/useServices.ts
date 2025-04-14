@@ -4,18 +4,22 @@ import { ServiceStatus } from '@/features/services/types/Service'
 
 export const useServices = () => {
   const [services, setServices] = useState<ServiceStatus[]>([])
-  const [error, setError] = useState<string>('')
+  const [error, setError] = useState<string>()
+  const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
     const getServices = async () => {
       try {
         const data = await ServiceAPI.getServices()
         setServices(data)
-        setError('') // Reset error if successful
-      } catch (error) {
-        console.error('Error fetching services:', error)
-        setError('Could not fetch services')
-        setServices([]) // Reset the services on error
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message)
+        } else {
+          setError('An unknown error occurred')
+        }
+      } finally {
+        setLoading(false)
       }
     }
 
@@ -28,5 +32,5 @@ export const useServices = () => {
     return () => clearInterval(interval)
   }, [])
 
-  return { services, error }
+  return { services, error, loading }
 }

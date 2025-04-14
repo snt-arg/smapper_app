@@ -2,43 +2,23 @@ import client from '@/shared/api/client'
 import { ServiceStatus } from '../types/Service'
 
 async function getServices(): Promise<ServiceStatus[]> {
-  return client.get('/services').then((response) => {
-    if (response.status === 200) {
-      return response.data
-    } else {
-      throw new Error('Failed to fetch services')
-    }
-  })
+  const response = await client.get('/services')
+  return response.data
 }
 
 async function getService(id: string): Promise<ServiceStatus> {
-  return client.get(`/services/${id}`).then((response) => {
-    if (response.status === 200) {
-      return response.data
-    } else {
-      throw new Error('Failed to fetch service')
-    }
-  })
+  const response = await client.get(`/services/${id}`)
+  return response.data
 }
 
 async function startService(id: string): Promise<ServiceStatus> {
-  return client.post(`/services/${id}/start`).then((response) => {
-    if (response.status === 200) {
-      return response.data
-    } else {
-      throw new Error('Failed to start service')
-    }
-  })
+  const response = await client.post(`/services/${id}/start`)
+  return response.data
 }
 
 async function stopService(id: string): Promise<ServiceStatus> {
-  return client.post(`/services/${id}/stop`).then((response) => {
-    if (response.status === 200) {
-      return response.data
-    } else {
-      throw new Error('Failed to stop service')
-    }
-  })
+  const response = await client.post(`/services/${id}/stop`)
+  return response.data
 }
 
 export const ServiceAPI = {
