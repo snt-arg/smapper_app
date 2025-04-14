@@ -9,7 +9,15 @@ const client = axios.create({
 client.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.error('API Error: ', error)
+    if (error.response) {
+      if (error.response.status === 404) {
+        console.error('Resource not found:', error.response.data)
+      } else {
+        console.error('Internal server error:', error.response.data)
+      }
+    } else {
+      console.error('API is unreachable')
+    }
     return Promise.reject(error)
   }
 )
