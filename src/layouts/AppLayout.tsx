@@ -1,4 +1,4 @@
-import Sidebar from '@/components/Sidebar'
+import Sidebar from '@/features/sidebar/components'
 import { Box, Flex } from '@chakra-ui/react'
 import { Outlet } from 'react-router-dom'
 

@@ -1,5 +1,5 @@
-import TopicDashboard from '@/components/ros/TopicDashboard'
-import ServiceDashboard from '@/components/Service'
+import TopicDashboard from '@/features/topics/components/TopicDashboard'
+import ServiceDashboard from '@/features/services/components'
 import { Container, Flex } from '@chakra-ui/react'
 
 function DashboardPage() {

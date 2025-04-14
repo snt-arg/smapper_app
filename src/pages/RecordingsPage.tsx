@@ -1,4 +1,4 @@
-import RosbagList from '@/components/Rosbags/RosbagList'
+import RosbagList from '@/features/rosbags/components/RosbagList'
 import { Box } from '@chakra-ui/react'
 
 function RecordingsPage() {
