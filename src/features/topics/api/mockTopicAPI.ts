@@ -4,7 +4,7 @@ function getTopics(): Promise<TopicStatus[]> {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(topics)
-    }, 200)
+    }, 500)
   })
 }
 
@@ -16,7 +16,7 @@ function getTopic(name: string): Promise<TopicStatus> {
         throw Error('Error finding topic')
       }
       resolve(topic)
-    }, 200)
+    }, 500)
   })
 }
 

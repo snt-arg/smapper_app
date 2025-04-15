@@ -1,5 +1,5 @@
-import TopicDashboard from '@/features/topics/components/TopicDashboard'
-import ServiceDashboard from '@/features/services/components'
+import TopicWidget from '@/features/topics/components/TopicDashboard'
+import ServiceWidget from '@/features/services/components/ServiceWidget'
 import { Container, Flex } from '@chakra-ui/react'
 
 function DashboardPage() {
@@ -11,8 +11,8 @@ function DashboardPage() {
         wrap="wrap"
         justify={{ base: 'center', lg: 'center' }}
       >
-        <ServiceDashboard />
-        <TopicDashboard />
+        <ServiceWidget />
+        <TopicWidget />
       </Flex>
     </Container>
   )

@@ -4,7 +4,7 @@ function getServices(): Promise<ServiceStatus[]> {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(services)
-    }, 200)
+    }, 500)
   })
 }
 
@@ -16,7 +16,7 @@ export async function getService(id: string): Promise<ServiceStatus> {
         throw Error('Error finding service with id')
       }
       resolve(service)
-    }, 200)
+    }, 500)
   })
 }
 
@@ -29,7 +29,7 @@ export async function startService(id: string): Promise<ServiceStatus> {
       }
       service.state = 'Active'
       resolve(service)
-    }, 200)
+    }, 500)
   })
 }
 
@@ -42,7 +42,7 @@ export async function stopService(id: string): Promise<ServiceStatus> {
       }
       service.state = 'Inactive'
       resolve(service)
-    }, 200)
+    }, 500)
   })
 }
 

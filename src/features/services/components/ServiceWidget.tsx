@@ -3,9 +3,10 @@ import { DataList } from '@chakra-ui/react' // Assume this component displays th
 import { ErrorMessage } from '@/shared/components/ErrorMessage' // The error component
 import { ServiceItem } from './ServiceItem' // The service item component
 import { useServices } from '@/features/services/hooks/useServices' // The custom hook for fetching services
+import WidgetSkeleton from '@/shared/components/WidgetSkeleton'
 
-export default function ServiceDashboard() {
-  const { services, error } = useServices()
+export default function ServiceWidget() {
+  const { services, error, loading } = useServices()
 
   if (error) {
     return (
@@ -16,12 +17,14 @@ export default function ServiceDashboard() {
   }
 
   return (
-    <Widget title="Services">
-      <DataList.Root orientation="vertical">
-        {services.map((service) => (
-          <ServiceItem key={service.id} service={service} />
-        ))}
-      </DataList.Root>
-    </Widget>
+    <WidgetSkeleton loading={loading}>
+      <Widget title="Services">
+        <DataList.Root orientation="vertical">
+          {services.map((service) => (
+            <ServiceItem key={service.id} service={service} />
+          ))}
+        </DataList.Root>
+      </Widget>
+    </WidgetSkeleton>
   )
 }
