@@ -3,7 +3,7 @@ import { RecordingStatus } from '@/features/recording/types/Recording'
 import client from '@/shared/api/client'
 
 async function getRecordingStatus(): Promise<RecordingStatus> {
-  const response = await client.get('/recording/status/')
+  const response = await client.get('/recording/')
   if (response.status === 200) {
     return response.data
   }
@@ -13,7 +13,7 @@ async function getRecordingStatus(): Promise<RecordingStatus> {
 async function startRecording(
   data: RecordingStartRequest
 ): Promise<RecordingStatus> {
-  const response = await client.post('/recording/start/', data)
+  const response = await client.post('/recording/start', data)
   if (response.status === 200) {
     return response.data
   }
@@ -21,7 +21,7 @@ async function startRecording(
 }
 
 async function stopRecording(): Promise<RecordingStatus> {
-  const response = await client.post('/recording/stop/')
+  const response = await client.post('/recording/stop')
   if (response.status === 200) {
     return response.data
   }
