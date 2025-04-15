@@ -1,11 +1,5 @@
 import { NavLink } from './Navigation.tsx'
-import {
-  ChartLine,
-  FolderDown,
-  LayoutDashboard,
-  Radio,
-  ServerCog,
-} from 'lucide-react'
+import { ChartLine, FolderDown, LayoutDashboard, ServerCog } from 'lucide-react'
 import Mobilebar from './MobileBar.tsx'
 import DesktopBar from './DesktopBar.tsx'
 import { useBreakpointValue } from '@chakra-ui/react'
