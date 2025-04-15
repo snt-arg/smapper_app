@@ -26,6 +26,7 @@ export const useServices = () => {
     getServices()
 
     const interval = setInterval(() => {
+      console.log('Refreshing services')
       getServices()
     }, 2000)
 
