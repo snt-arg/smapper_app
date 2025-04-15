@@ -14,7 +14,7 @@ const DashboardPage = lazy(() => import('@/pages/DashboardPage'))
 const ServicesPage = lazy(() => import('@/pages/ServicesPage'))
 const VisualizerPage = lazy(() => import('@/pages/VisualizerPage'))
 const RecordingsPage = lazy(() => import('@/pages/RecordingsPage'))
-const SensorsPage = lazy(() => import('@/pages/SensorsPage'))
+// const SensorsPage = lazy(() => import('@/pages/SensorsPage'))
 
 const renderApp = (isProduction: boolean) => {
   const AppComponent = (
@@ -27,7 +27,7 @@ const renderApp = (isProduction: boolean) => {
               <Route path="/services" element={<ServicesPage />} />
               <Route path="/visualizer" element={<VisualizerPage />} />
               <Route path="/recordings" element={<RecordingsPage />} />
-              <Route path="/sensors" element={<SensorsPage />} />
+              {/*<Route path="/sensors" element={<SensorsPage />} />*/}
             </Route>
           </Routes>
           <Toaster />

@@ -32,11 +32,11 @@ const links: NavLink[] = [
     icon: FolderDown,
     text: 'Recordings',
   },
-  {
-    href: '/sensors',
-    icon: Radio,
-    text: 'Sensors',
-  },
+  // {
+  //   href: '/sensors',
+  //   icon: Radio,
+  //   text: 'Sensors',
+  // },
 ]
 
 const smVariant = { navigation: 'drawer', navigationButton: true }
