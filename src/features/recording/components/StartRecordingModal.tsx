@@ -9,60 +9,54 @@ import {
   Portal,
   Stack,
   Textarea,
+  Select,
+  createListCollection,
 } from '@chakra-ui/react'
 import { RecordingStartRequest } from '@/features/recording/types/Recording'
 import { FieldValues, useForm } from 'react-hook-form'
 import { useState } from 'react'
+import { TopicStatus } from '@/features/topics/types/Topic'
+import usePolling from '@/shared/hooks/usePolling'
+import TopicAPI from '@/features/topics/api'
 
-// TODO: This needs to be updated with a list of available topics
-const topics = [
-  '/ouster/points',
-  '/ouster/imu',
-  '/camera/front_right/image_raw',
-  '/camera/front_right/camera_info',
-  '/camera/front_left/image_raw',
-  '/camera/front_left/camera_info',
-  '/camera/side_right/image_raw',
-  '/camera/side_right/camera_info',
-  '/camera/side_left/image_raw',
-  '/camera/side_left/camera_info',
-]
-
-export default function RecordingModal({
-  disabled,
+function NewRecordingForm({
   onStart,
+  onClose,
+  topics,
 }: {
-  disabled?: boolean
   onStart: (data: RecordingStartRequest) => void
+  onClose: () => void
+  topics: TopicStatus[]
 }) {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm()
-
-  const [modalOpen, setModalOpen] = useState(false)
+  const { register, handleSubmit } = useForm()
+  const [selectedTopics, setSelectedTopics] = useState<string[]>([])
 
   const onSubmit = (data: FieldValues) => {
-    const raw_tags: string = data.tags
+    const raw_tags: string = data.tags as string
     const tags: string[] = raw_tags.split(',').map((tag) => tag.trim())
 
-    const bag = {
-      name: data.name,
-      detail: data.detail,
+    const bag: RecordingStartRequest = {
+      name: data.name as string,
+      detail: data.detail as string,
       tags: tags,
-      topics: topics,
+      topics: selectedTopics,
     }
 
     onStart(bag)
-    setModalOpen(!modalOpen)
+    onClose()
   }
 
-  const FormControl = () => (
+  const topicCollection = createListCollection({
+    items: topics
+      .filter((topic) => topic.status !== 'Offline')
+      .map((topic) => ({ label: topic.name, value: topic.name })),
+  })
+
+  return (
     <Box as="form" onSubmit={handleSubmit(onSubmit)}>
       <Fieldset.Root>
         <Fieldset.Content>
-          <Field.Root required={!!errors.name}>
+          <Field.Root required>
             <Field.Label>
               Name
               <Field.RequiredIndicator />
@@ -86,20 +80,64 @@ export default function RecordingModal({
             <Field.HelperText>Separate tags with comma</Field.HelperText>
           </Field.Root>
           <Field.Root required>
-            <Field.Label>Topics</Field.Label>
+            <Select.Root
+              multiple
+              collection={topicCollection}
+              size="sm"
+              width="320px"
+              onValueChange={(selected) => {
+                setSelectedTopics(selected.value)
+              }}
+            >
+              <Select.HiddenSelect />
+              <Select.Label>Select topics</Select.Label>
+              <Select.Control>
+                <Select.Trigger>
+                  <Select.ValueText placeholder="Selected topics" />
+                </Select.Trigger>
+                <Select.IndicatorGroup>
+                  <Select.Indicator />
+                </Select.IndicatorGroup>
+              </Select.Control>
+              <Select.Positioner>
+                <Select.Content>
+                  {topicCollection.items.map((topic) => (
+                    <Select.Item item={topic} key={topic.value}>
+                      {topic.label}
+                      <Select.ItemIndicator />
+                    </Select.Item>
+                  ))}
+                </Select.Content>
+              </Select.Positioner>
+            </Select.Root>
           </Field.Root>
         </Fieldset.Content>
       </Fieldset.Root>
 
-      <Dialog.Footer onSubmit={handleSubmit(onSubmit)}>
+      <Dialog.Footer>
         <Dialog.ActionTrigger asChild>
-          <Button variant="outline" onClick={() => setModalOpen(!modalOpen)}>
+          <Button variant="outline" onClick={onClose}>
             Cancel
           </Button>
         </Dialog.ActionTrigger>
         <Button type="submit">Start</Button>
       </Dialog.Footer>
     </Box>
+  )
+}
+
+export default function RecordingModal({
+  disabled,
+  onStart,
+}: {
+  disabled?: boolean
+  onStart: (data: RecordingStartRequest) => void
+}) {
+  const [modalOpen, setModalOpen] = useState(false)
+  const { data: topics } = usePolling<TopicStatus[]>(
+    TopicAPI.getTopics,
+    5000,
+    true
   )
 
   return (
@@ -131,7 +169,11 @@ export default function RecordingModal({
             </Dialog.Header>
 
             <Dialog.Body>
-              <FormControl />
+              <NewRecordingForm
+                onStart={onStart}
+                onClose={() => setModalOpen(!modalOpen)}
+                topics={topics ? topics : []}
+              />
             </Dialog.Body>
 
             <Dialog.CloseTrigger asChild>
