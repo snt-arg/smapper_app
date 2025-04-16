@@ -1,4 +1,4 @@
-import TopicWidget from '@/features/topics/components/TopicDashboard'
+import TopicWidget from '@/features/topics/components/TopicWidget'
 import ServiceWidget from '@/features/services/components/ServiceWidget'
 import { Container, Flex } from '@chakra-ui/react'
 

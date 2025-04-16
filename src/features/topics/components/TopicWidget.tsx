@@ -5,8 +5,8 @@ import { ErrorMessage } from '@/shared/components/ErrorMessage'
 import { TopicItem } from './TopicItem'
 import WidgetSkeleton from '@/shared/components/WidgetSkeleton'
 import usePolling from '@/shared/hooks/usePolling'
-import { TopicAPI } from '../api/mockTopicAPI'
-import { TopicStatus } from '../types/Topic'
+import TopicAPI from '@/features/topics/api'
+import { TopicStatus } from '@/features/topics/types/Topic'
 
 const POLLING_INTERVAL = import.meta.env.VITE_TOPICS_POLLING_INTERVAL
   ? parseInt(import.meta.env.VITE_TOPICS_POLLING_INTERVAL as string)
