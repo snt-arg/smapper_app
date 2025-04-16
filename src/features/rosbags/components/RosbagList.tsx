@@ -14,7 +14,7 @@ import {
   RecordingStartRequest,
   RecordingStatus,
 } from '@/features/recording/types/Recording'
-import RecordingModal from './RosbagCreateModal'
+import StartRecordingModal from '@/features/recording/components/StartRecordingModal'
 import RosbagAPI from '../api'
 import { formatSecondTimestamp } from '@/shared/utils/formatters'
 
@@ -133,7 +133,10 @@ export default function RosbagList() {
   return (
     <Skeleton loading={loading} divideY="2px">
       <HStack mb={4} gap={4} w="100%">
-        <RecordingModal disabled={isRecording} onStart={handleStartRecording} />
+        <StartRecordingModal
+          disabled={isRecording}
+          onStart={handleStartRecording}
+        />
         <Button
           disabled={!isRecording}
           size={{ base: 'xs', sm: 'lg' }}
@@ -145,7 +148,7 @@ export default function RosbagList() {
       </HStack>
 
       <SimpleGrid columns={columns} gap="4" pt="4">
-        {data.map((rosbag) => (
+        {data?.map((rosbag) => (
           <RosbagCard rosbag={rosbag} key={rosbag.id} onDelete={handleDelete} />
         ))}
       </SimpleGrid>

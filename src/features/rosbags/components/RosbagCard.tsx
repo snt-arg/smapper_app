@@ -1,7 +1,6 @@
-import RosbagAPI from '@/features/rosbags/api'
 import {
   RosbagMetadata,
-  RosbagMetadatUpdate,
+  // RosbagMetadatUpdate,
 } from '@/features/rosbags/types/Rosbag'
 import {
   Badge,
@@ -77,11 +76,11 @@ const Body = ({ rosbag }: { rosbag: RosbagMetadata }) => {
 const Footer = ({
   rosbag,
   onDelete,
-  onUpdate,
+  // onUpdate,
 }: {
   rosbag: RosbagMetadata
   onDelete: (id: number) => void
-  onUpdate: (id: number, data: RosbagMetadatUpdate) => void
+  // onUpdate: (id: number, data: RosbagMetadatUpdate) => void
 }) => (
   <Card.Footer flexDir="column" spaceY="2">
     <HStack justifyContent="space-between" w="100%">
@@ -123,11 +122,11 @@ const Footer = ({
 export default function RosbagCard({
   rosbag,
   onDelete,
-  onUpdate,
+  // onUpdate,
 }: {
   rosbag: RosbagMetadata
   onDelete: (id: number) => void
-  onUpdate?: (id: number, data: RosbagMetadatUpdate) => void
+  // onUpdate?: (id: number, data: RosbagMetadatUpdate) => void
 }) {
   return (
     <Card.Root variant="subtle" maxW="lg">
@@ -138,7 +137,7 @@ export default function RosbagCard({
         </HStack>
       </Card.Header>
       <Body rosbag={rosbag} />
-      <Footer rosbag={rosbag} onDelete={onDelete} onUpdate={onUpdate} />
+      <Footer rosbag={rosbag} onDelete={onDelete} />
     </Card.Root>
   )
 }
