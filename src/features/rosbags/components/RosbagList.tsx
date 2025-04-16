@@ -15,22 +15,31 @@ import {
   RecordingStatus,
 } from '@/features/recording/types/Recording'
 import RecordingModal from './RosbagCreateModal'
+import RosbagAPI from '../api'
+import { formatSecondTimestamp } from '@/shared/utils/formatters'
 
 export default function RosbagList() {
   const columns = useBreakpointValue({ base: 1, sm: 1, md: 2, lg: 3, xl: 4 })
-  const { data, loading } = useRosbags()
+  const { data, loading, setData } = useRosbags()
   const [isRecording, setIsRecording] = useState(false)
   const [recordingStatus, setRecordingStatus] =
     useState<RecordingStatus | null>(null)
   const [elapsedTime, setElapsedTime] = useState(0)
   const recordingToastId = useRef<string | undefined>(undefined)
 
-  const formatTime = (seconds: number): string => {
-    const mins = Math.floor(seconds / 60)
-    const secs = Math.floor(seconds % 60)
-    return `${mins.toString().padStart(2, '0')}:${secs
-      .toString()
-      .padStart(2, '0')}`
+  const handleDelete = (id: number) => {
+    const callDelete = async () => {
+      try {
+        await RosbagAPI.deleteRosbag(id)
+        setData((prevCards) => prevCards.filter((card) => card.id !== id))
+      } catch (err) {
+        console.error(err)
+      }
+    }
+
+    callDelete().catch((err) => {
+      console.error(err)
+    })
   }
 
   useEffect(() => {
@@ -45,7 +54,9 @@ export default function RosbagList() {
 
         if (recordingStatus?.metadata) {
           setElapsedTime(recordingStatus.metadata?.elapsed_time)
-          const elapsed = formatTime(recordingStatus.metadata?.elapsed_time)
+          const elapsed = formatSecondTimestamp(
+            recordingStatus.metadata?.elapsed_time
+          )
           if (recordingToastId.current)
             toaster.update(recordingToastId.current, {
               description: `Elapsed Time: ${elapsed}`,
@@ -73,7 +84,7 @@ export default function RosbagList() {
 
       recordingToastId.current = toaster.create({
         title: 'Recording...',
-        description: `Elapsed Time: ${formatTime(elapsedTime)}`,
+        description: `Elapsed Time: ${formatSecondTimestamp(elapsedTime)}`,
         type: 'loading',
       })
     } catch (error) {
@@ -88,9 +99,12 @@ export default function RosbagList() {
 
   const handleStopRecording = async () => {
     try {
-      const status = await RecordingAPI.stopRecording()
-      setRecordingStatus(status)
+      const newBag = await RecordingAPI.stopRecording()
+      setRecordingStatus(null)
       setIsRecording(false)
+
+      // Update the data with the new bag
+      setData((prevBags) => [...prevBags, newBag])
 
       // Close the persistent toast
       if (recordingToastId.current) {
@@ -132,7 +146,7 @@ export default function RosbagList() {
 
       <SimpleGrid columns={columns} gap="4" pt="4">
         {data.map((rosbag) => (
-          <RosbagCard rosbag={rosbag} key={rosbag.id} />
+          <RosbagCard rosbag={rosbag} key={rosbag.id} onDelete={handleDelete} />
         ))}
       </SimpleGrid>
     </Skeleton>

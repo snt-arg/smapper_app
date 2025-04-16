@@ -1,4 +1,5 @@
 import { RecordingStatus } from '@/features/recording/types/Recording'
+import { RosbagMetadata } from '@/features/rosbags/types/Rosbag'
 
 const recordingStatus: RecordingStatus = { state: 'Idle' }
 
@@ -34,25 +35,29 @@ function startRecording(): Promise<RecordingStatus> {
   })
 }
 
-function stopRecording(): Promise<RecordingStatus> {
+function stopRecording(): Promise<RosbagMetadata> {
   return new Promise((resolve) => {
     setTimeout(() => {
       if (recordingStatus.state !== 'Recording') {
         throw Error('Recording session is not running')
       }
 
-      recordingStatus.state = 'Idle'
-      recordingStatus.metadata = {
-        elapsed_time: 124,
-        bag_name: 'Some name',
-        bag_size: 213242,
+      // BUG: ID is hardcoded
+      const data: RosbagMetadata = {
+        id: 132,
+        name: 'Some name',
+        size: 213242,
+        duration: 124,
         start_time: 1234213241,
-        stop_time: 31234123423,
+        end_time: 31234123423,
+        detail: 'Some detail',
+        tags: 'tag1, tag2',
         topics: [],
       }
-      const finalStatus = recordingStatus
+
+      recordingStatus.state = 'Idle'
       recordingStatus.metadata = undefined
-      resolve(finalStatus)
+      resolve(data)
     }, 200)
   })
 }

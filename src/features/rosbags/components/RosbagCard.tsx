@@ -1,5 +1,8 @@
 import RosbagAPI from '@/features/rosbags/api'
-import { RosbagMetadata } from '@/features/rosbags/types/Rosbag'
+import {
+  RosbagMetadata,
+  RosbagMetadatUpdate,
+} from '@/features/rosbags/types/Rosbag'
 import {
   Badge,
   Card,
@@ -15,18 +18,6 @@ import {
 } from '@chakra-ui/react'
 import { DatabaseIcon, TimerIcon } from 'lucide-react'
 import { useState } from 'react'
-
-const delRosbag = (id: number) => {
-  const callDelete = async () => {
-    try {
-      await RosbagAPI.deleteRosbag(id)
-    } catch (err) {
-      console.error(err)
-    }
-  }
-
-  callDelete()
-}
 
 const formatTimestamp = (timestamp: number): string => {
   const date = new Date(timestamp * 1000)
@@ -83,7 +74,15 @@ const Body = ({ rosbag }: { rosbag: RosbagMetadata }) => {
   )
 }
 
-const Footer = ({ rosbag }: { rosbag: RosbagMetadata }) => (
+const Footer = ({
+  rosbag,
+  onDelete,
+  onUpdate,
+}: {
+  rosbag: RosbagMetadata
+  onDelete: (id: number) => void
+  onUpdate: (id: number, data: RosbagMetadatUpdate) => void
+}) => (
   <Card.Footer flexDir="column" spaceY="2">
     <HStack justifyContent="space-between" w="100%">
       <Tag.Root variant="solid" colorPalette="blue">
@@ -104,23 +103,32 @@ const Footer = ({ rosbag }: { rosbag: RosbagMetadata }) => (
     <HStack wrap="wrap" w="100%">
       {rosbag.tags &&
         rosbag.tags !== '' &&
-        rosbag.tags?.split(',').map((tag, key) => (
-          <Badge variant="outline" textStyle="sm" key={key}>
+        rosbag.tags?.split(',').map((tag) => (
+          <Badge variant="outline" textStyle="sm" key={tag}>
             {tag}
           </Badge>
         ))}
     </HStack>
 
     <HStack w="100%" justifyContent="flex-end">
-      <Button variant="outline" onClick={() => delRosbag(rosbag.id)}>
+      <Button variant="outline" onClick={() => onDelete(rosbag.id)}>
         Delete
       </Button>
+      {/* TODO: we must create another modal for updating card*/}
       <Button>Update</Button>
     </HStack>
   </Card.Footer>
 )
 
-export default function RosbagCard({ rosbag }: { rosbag: RosbagMetadata }) {
+export default function RosbagCard({
+  rosbag,
+  onDelete,
+  onUpdate,
+}: {
+  rosbag: RosbagMetadata
+  onDelete: (id: number) => void
+  onUpdate?: (id: number, data: RosbagMetadatUpdate) => void
+}) {
   return (
     <Card.Root variant="subtle" maxW="lg">
       <Card.Header>
@@ -130,7 +138,7 @@ export default function RosbagCard({ rosbag }: { rosbag: RosbagMetadata }) {
         </HStack>
       </Card.Header>
       <Body rosbag={rosbag} />
-      <Footer rosbag={rosbag} />
+      <Footer rosbag={rosbag} onDelete={onDelete} onUpdate={onUpdate} />
     </Card.Root>
   )
 }

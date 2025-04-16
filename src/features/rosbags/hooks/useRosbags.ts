@@ -19,8 +19,11 @@ export const useRosbags = () => {
       }
     }
 
-    getRosbags()
+    getRosbags().catch((err) => {
+      console.error('Error in useRosbags:', err)
+      setLoading(false)
+    })
   }, [])
 
-  return { data, loading }
+  return { data, loading, setData }
 }
