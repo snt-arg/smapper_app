@@ -2,24 +2,24 @@ import { useState, useEffect } from 'react'
 import TopicApi from '@/features/topics/api'
 import { TopicStatus } from '@/features/topics/types/Topic'
 
-export function useTopics(): {
-  topics?: TopicStatus[]
+export function useTopic(name: string): {
+  topic?: TopicStatus
   error?: Error
 } {
-  const [topics, setTopic] = useState<TopicStatus[]>()
+  const [topic, setTopic] = useState<TopicStatus>()
   const [error, setError] = useState<Error>()
 
   useEffect(() => {
-    const getTopics = async () => {
+    const getTopic = async () => {
       try {
-        const data = await TopicApi.getTopics()
+        const data = await TopicApi.getTopic(name)
         setTopic(data)
       } catch (error) {
         setError(error as Error)
       }
     }
-    void getTopics()
-  }, [])
+    void getTopic()
+  }, [name])
 
-  return { topics, error }
+  return { topic, error }
 }
