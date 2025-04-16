@@ -1,16 +1,30 @@
 import { Skeleton, Table } from '@chakra-ui/react'
-import { useServices } from '../hooks/useServices'
+import usePolling from '@/shared/hooks/usePolling'
 import { toaster } from '@/shared/components/ui/toaster'
 import ServiceTableItem from './ServiceTableItem'
 import { ErrorMessage } from '@/shared/components/ErrorMessage'
+import { ServiceStatus } from '@/features/services/types/Service'
+import ServiceAPI from '@/features/services/api'
+
+const POLLING_INTERVAL = import.meta.env.VITE_SERVICES_POLLING_INTERVAL
+  ? parseInt(import.meta.env.VITE_SERVICES_POLLING_INTERVAL as string)
+  : 1000
 
 function ServicesControl() {
-  const { services, error, loading } = useServices()
+  const {
+    data: services,
+    loading,
+    error,
+  } = usePolling<ServiceStatus[]>(
+    ServiceAPI.getServices,
+    POLLING_INTERVAL,
+    true
+  )
 
   if (error) {
     toaster.create({
       title: 'Error Loading Services',
-      description: error,
+      description: error.message,
       type: 'error',
       closable: true,
       action: {
@@ -20,7 +34,7 @@ function ServicesControl() {
         },
       },
     })
-    return <ErrorMessage message={error} />
+    return <ErrorMessage message={error.message} />
   }
 
   return (
@@ -39,7 +53,7 @@ function ServicesControl() {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {services.map((service) => (
+          {services?.map((service) => (
             <ServiceTableItem service={service} key={service.id} />
           ))}
         </Table.Body>

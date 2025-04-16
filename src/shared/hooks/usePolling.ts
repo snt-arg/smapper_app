@@ -4,10 +4,10 @@ function usePolling<T>(
   fetchFunction: () => Promise<T>,
   interval: number,
   immediate = true
-): { data: T | null; loading: boolean; error: Error | null } {
-  const [data, setData] = useState<T | null>(null)
+): { data?: T; loading: boolean; error?: Error } {
+  const [data, setData] = useState<T>()
   const [loading, setLoading] = useState<boolean>(immediate)
-  const [error, setError] = useState<Error | null>(null)
+  const [error, setError] = useState<Error>()
 
   useEffect(() => {
     let isMounted = true
@@ -22,7 +22,7 @@ function usePolling<T>(
       } catch (error) {
         if (isMounted) {
           setError(error as Error)
-          setData(null)
+          setData(undefined)
         }
         console.error('Error fetching data:', error)
       } finally {

@@ -5,8 +5,8 @@ import { ErrorMessage } from '@/shared/components/ErrorMessage'
 import { ServiceItem } from './ServiceItem'
 import WidgetSkeleton from '@/shared/components/WidgetSkeleton'
 import usePolling from '@/shared/hooks/usePolling'
-import { ServiceAPI } from '../api/serviceAPI'
-import { ServiceStatus } from '../types/Service'
+import ServiceAPI from '@/features/services/api'
+import { ServiceStatus } from '@/features/services/types/Service'
 
 const POLLING_INTERVAL = import.meta.env.VITE_SERVICES_POLLING_INTERVAL
   ? parseInt(import.meta.env.VITE_SERVICES_POLLING_INTERVAL as string)
