@@ -2,23 +2,33 @@ import Widget from '@/shared/components/Widget'
 import { Table } from '@chakra-ui/react'
 import { toaster } from '@/shared/components/ui/toaster'
 import { ErrorMessage } from '@/shared/components/ErrorMessage'
-import { useTopics } from '@/features/topics/hooks/useTopics'
 import { TopicItem } from './TopicItem'
 import WidgetSkeleton from '@/shared/components/WidgetSkeleton'
+import usePolling from '@/shared/hooks/usePolling'
+import { TopicAPI } from '../api/mockTopicAPI'
+import { TopicStatus } from '../types/Topic'
+
+const POLLING_INTERVAL = import.meta.env.VITE_TOPICS_POLLING_INTERVAL
+  ? parseInt(import.meta.env.VITE_TOPICS_POLLING_INTERVAL as string)
+  : 2000
 
 export default function TopicWidget() {
-  const { topics, error, loading } = useTopics()
+  const {
+    data: topics,
+    error,
+    loading,
+  } = usePolling<TopicStatus[]>(TopicAPI.getTopics, POLLING_INTERVAL, true)
 
   if (error) {
     toaster.create({
       title: 'Error Loading Topics',
-      description: error,
+      description: error.message,
       type: 'error',
       closable: true,
     })
     return (
       <Widget title="Topics Monitor">
-        <ErrorMessage message={error} />
+        <ErrorMessage message={error.message} />
       </Widget>
     )
   }
@@ -37,8 +47,8 @@ export default function TopicWidget() {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {topics.map((service, idx) => (
-              <TopicItem key={idx} service={service} />
+            {topics?.map((topic) => (
+              <TopicItem key={topic.name} service={topic} />
             ))}
           </Table.Body>
         </Table.Root>
