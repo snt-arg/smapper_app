@@ -6,4 +6,4 @@ function VisualizerPage() {
   )
 }
 
-export default VisualizerPage;
+export default VisualizerPage

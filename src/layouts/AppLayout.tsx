@@ -1,16 +1,16 @@
-import Sidebar from "@/components/Sidebar";
-import { Box, Flex } from "@chakra-ui/react";
-import { Outlet } from "react-router-dom";
+import Sidebar from '@/features/sidebar/components'
+import { Box, Flex } from '@chakra-ui/react'
+import { Outlet } from 'react-router-dom'
 
 function AppLayout() {
   return (
-    <Box bg={{ base: "gray.200", _dark: "gray.900" }}>
-      <Flex direction="column" lg={{ flexDir: "row" }}>
+    <Box minH="100vh" h="100%" bg={'bg'}>
+      <Flex direction="column" lg={{ flexDir: 'row' }}>
         <Sidebar />
         <Outlet />
       </Flex>
     </Box>
-  );
+  )
 }
 
-export default AppLayout;
+export default AppLayout

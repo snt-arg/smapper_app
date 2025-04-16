@@ -1,0 +1,9 @@
+services:
+  smapper_app:
+    image: smapper_app:prod
+    container_name: smapper_app_prod
+    build:
+      context: .
+    environment:
+      - API_URL=http://localhost:8000/api/v1
+    network_mode: 'host'
