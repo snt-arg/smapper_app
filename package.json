@@ -13,6 +13,8 @@
     "@chakra-ui/react": "^3.16.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@foxglove/rosmsg": "^5.0.4",
+    "@foxglove/ws-protocol": "^0.8.0",
     "@tailwindcss/vite": "^4.1.4",
     "axios": "^1.8.4",
     "eslint-plugin-react-dom": "^1.48.1",
