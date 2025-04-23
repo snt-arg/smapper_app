@@ -1,29 +1,22 @@
-# Dockerfile
-
-# Step 1: Use a Node.js image to build the app
-FROM node:18 as builder
-
-# Set working directory inside the container
+FROM oven/bun:1 AS base
 WORKDIR /app
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
+ARG API_URL=${API_URL}
 
-# Install dependencies
-RUN npm install
+ENV API_URL=${API_URL}
 
-# Copy the rest of the app’s source code
+FROM base AS install
+RUN mkdir -p /temp/build
+COPY package.json bun.lockb /temp/build/
+RUN cd /temp/build && bun install --frozen-lockfile --production
+
+FROM base AS candidate
 COPY . .
+COPY --from=install /temp/build/node_modules node_modules
+RUN bun run build
 
-# Build the app
-RUN npm run build
-
-
-# Step 2: Use an Nginx image to serve the static files
-FROM nginx:alpine
-
-# Copy the build files from the builder stage to the Nginx web directory
-COPY --from=builder /app/dist /usr/share/nginx/html
+from nginx:alpine
+COPY --from=candidate /app/dist /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80
