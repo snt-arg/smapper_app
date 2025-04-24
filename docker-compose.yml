@@ -4,7 +4,7 @@ services:
     container_name: smapper_app_prod
     build:
       args:
-        API_URL: $PROD_API_URL
+        API_URL: $API_URL
       context: .
     ports:
       - '80:80'
