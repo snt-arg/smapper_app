@@ -8,24 +8,73 @@ import {
 import { useRosbags } from '@/features/rosbags/hooks/useRosbags'
 import { toaster } from '@/shared/components/ui/toaster'
 import RosbagCard from './RosbagCard'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useReducer } from 'react'
 import RecordingAPI from '@/features/recording/api/'
+import usePolling from '@/shared/hooks/usePolling'
 import {
   RecordingStartRequest,
   RecordingStatus,
 } from '@/features/recording/types/Recording'
 import StartRecordingModal from '@/features/recording/components/StartRecordingModal'
 import RosbagAPI from '../api'
-import { formatSecondTimestamp } from '@/shared/utils/formatters'
+import { RosbagMetadata } from '../types/Rosbag'
+
+enum RecordingActionKind {
+  UPDATE,
+  SET_ROSBAGS,
+}
+
+interface RecordingAction {
+  type: RecordingActionKind
+  new_status?: RecordingStatus
+  new_bags?: RosbagMetadata[]
+}
+
+interface RecordingState {
+  recordingStatus: RecordingStatus | undefined
+  isRecording: boolean
+  rosbags?: RosbagMetadata[]
+}
+
+function reducer(state: RecordingState, action: RecordingAction) {
+  switch (action.type) {
+    case RecordingActionKind.UPDATE:
+      return {
+        ...state,
+        recordingState: action.new_status,
+        isRecording: action.new_status?.state === 'Recording',
+      }
+    case RecordingActionKind.SET_ROSBAGS:
+      return {
+        ...state,
+        rosbags: action.new_bags ? action.new_bags : [],
+      }
+    default:
+      return state
+  }
+}
 
 export default function RosbagList() {
   const columns = useBreakpointValue({ base: 1, sm: 1, md: 2, lg: 3, xl: 4 })
   const { data, loading, setData } = useRosbags()
-  const [isRecording, setIsRecording] = useState(false)
-  const [recordingStatus, setRecordingStatus] =
-    useState<RecordingStatus | null>(null)
-  const [elapsedTime, setElapsedTime] = useState(0)
-  const recordingToastId = useRef<string | undefined>(undefined)
+  const { data: recordingStatus } = usePolling(
+    RecordingAPI.getRecordingStatus,
+    5000,
+    true
+  )
+  const [state, dispatch] = useReducer(reducer, {
+    recordingStatus: recordingStatus,
+    isRecording: false,
+    rosbags: [],
+  })
+
+  useEffect(() => {
+    dispatch({ type: RecordingActionKind.UPDATE, new_status: recordingStatus })
+  }, [recordingStatus])
+
+  useEffect(() => {
+    dispatch({ type: RecordingActionKind.SET_ROSBAGS, new_bags: data })
+  }, [data])
 
   const handleDelete = (id: number) => {
     const callDelete = async () => {
@@ -42,50 +91,14 @@ export default function RosbagList() {
     })
   }
 
-  useEffect(() => {
-    const interval = setInterval(async () => {
-      if (isRecording) {
-        try {
-          const status = await RecordingAPI.getRecordingStatus()
-          setRecordingStatus(status)
-        } catch (err) {
-          console.error(err)
-        }
-
-        if (recordingStatus?.metadata) {
-          setElapsedTime(recordingStatus.metadata?.elapsed_time)
-          const elapsed = formatSecondTimestamp(
-            recordingStatus.metadata?.elapsed_time
-          )
-          if (recordingToastId.current)
-            toaster.update(recordingToastId.current, {
-              description: `Elapsed Time: ${elapsed}`,
-            })
-        }
-      }
-    }, 1000)
-
-    return () => clearInterval(interval)
-  }, [elapsedTime, recordingToastId, isRecording, recordingStatus])
-
   const handleStartRecording = async (bag: RecordingStartRequest) => {
-    console.log('Starting....')
     try {
-      const status = await RecordingAPI.startRecording(bag)
-      setRecordingStatus(status)
-      setIsRecording(true)
-      setElapsedTime(0)
+      await RecordingAPI.startRecording(bag)
 
       toaster.create({
         title: 'Recording started',
         type: 'success',
         closable: true,
-      })
-
-      recordingToastId.current = toaster.create({
-        title: 'Recording...',
-        description: `Elapsed Time: ${formatSecondTimestamp(elapsedTime)}`,
-        type: 'loading',
       })
     } catch (error) {
       console.error('Failed to start recording:', error)
@@ -100,17 +113,7 @@ export default function RosbagList() {
   const handleStopRecording = async () => {
     try {
       const newBag = await RecordingAPI.stopRecording()
-      setRecordingStatus(null)
-      setIsRecording(false)
-
-      // Update the data with the new bag
       setData((prevBags) => [...prevBags, newBag])
-
-      // Close the persistent toast
-      if (recordingToastId.current) {
-        toaster.remove(recordingToastId.current)
-        recordingToastId.current = undefined
-      }
 
       // Show success toast
       toaster.create({
@@ -118,8 +121,6 @@ export default function RosbagList() {
         type: 'success',
         closable: true,
       })
-
-      // TODO: Update data
     } catch (error) {
       console.error('Failed to stop recording:', error)
       toaster.create({
@@ -134,21 +135,29 @@ export default function RosbagList() {
     <Skeleton loading={loading} divideY="2px">
       <HStack mb={4} gap={4} w="100%">
         <StartRecordingModal
-          disabled={isRecording}
-          onStart={handleStartRecording}
+          disabled={state.isRecording}
+          onStart={(data: RecordingStartRequest) => {
+            void (async () => {
+              await handleStartRecording(data)
+            })()
+          }}
         />
         <Button
-          disabled={!isRecording}
+          disabled={!state.isRecording}
           size={{ base: 'xs', sm: 'lg' }}
           colorPalette="red"
-          onClick={handleStopRecording}
+          onClick={() => {
+            void (async () => {
+              await handleStopRecording()
+            })()
+          }}
         >
           Stop Recording
         </Button>
       </HStack>
 
       <SimpleGrid columns={columns} gap="4" pt="4">
-        {data?.map((rosbag) => (
+        {state.rosbags?.map((rosbag) => (
           <RosbagCard rosbag={rosbag} key={rosbag.id} onDelete={handleDelete} />
         ))}
       </SimpleGrid>

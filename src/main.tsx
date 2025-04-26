@@ -8,6 +8,7 @@ import { Toaster } from '@/shared/components/ui/toaster'
 
 import AppLayout from '@/layouts/AppLayout'
 import createSystem from '@/theme.ts'
+import RecordingStateToaster from '@/features/recording/components/RecordingStateToaster'
 
 // Lazy import pages
 const DashboardPage = lazy(() => import('@/pages/DashboardPage'))
@@ -31,6 +32,7 @@ const renderApp = (isProduction: boolean) => {
             </Route>
           </Routes>
           <Toaster />
+          <RecordingStateToaster />
         </BrowserRouter>
       </ColorModeProvider>
     </ChakraProvider>
