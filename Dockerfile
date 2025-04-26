@@ -1,9 +1,9 @@
 FROM oven/bun:1 AS base
 WORKDIR /app
 
-ARG API_URL=${API_URL}
+ARG API_URL
 
-ENV API_URL=${API_URL}
+ENV API_URL=$API_URL
 
 FROM base AS install
 RUN mkdir -p /temp/build
