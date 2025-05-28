@@ -8,6 +8,14 @@ function getTopics(): Promise<TopicStatus[]> {
   })
 }
 
+function getAllTopics(): Promise<TopicStatus[]> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(topics)
+    }, 500)
+  })
+}
+
 function getTopic(name: string): Promise<TopicStatus> {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -22,11 +30,13 @@ function getTopic(name: string): Promise<TopicStatus> {
 
 export const TopicAPI = {
   getTopics,
+  getAllTopics,
   getTopic,
 }
 
 export default {
   getTopics,
+  getAllTopics,
   getTopic,
 }
 
