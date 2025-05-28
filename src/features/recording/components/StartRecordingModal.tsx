@@ -47,9 +47,7 @@ function NewRecordingForm({
   }
 
   const topicCollection = createListCollection({
-    items: topics
-      .filter((topic) => topic.status !== 'Offline')
-      .map((topic) => ({ label: topic.name, value: topic.name })),
+    items: topics.map((topic) => ({ label: topic.name, value: topic.name })),
   })
 
   return (
