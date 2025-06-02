@@ -47,7 +47,9 @@ function NewRecordingForm({
   }
 
   const topicCollection = createListCollection({
-    items: topics.map((topic) => ({ label: topic.name, value: topic.name })),
+    items: topics
+      .sort()
+      .map((topic) => ({ label: topic.name, value: topic.name })),
   })
 
   return (
