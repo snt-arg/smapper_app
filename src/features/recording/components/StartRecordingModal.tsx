@@ -135,7 +135,7 @@ export default function RecordingModal({
 }) {
   const [modalOpen, setModalOpen] = useState(false)
   const { data: topics } = usePolling<TopicStatus[]>(
-    TopicAPI.getTopics,
+    TopicAPI.getAllTopics,
     5000,
     true
   )
