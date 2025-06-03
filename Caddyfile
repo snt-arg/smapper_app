@@ -1,0 +1,13 @@
+:80
+
+root * /usr/share/caddy
+file_server
+
+# Proxy all API calls to FastAPI
+handle_path /api/* {
+    reverse_proxy localhost:8000
+}
+
+# React SPA routing fallback
+try_files {path} /index.html
+

@@ -1,10 +1,15 @@
 services:
   smapper_app_prod:
     image: smapper_app:prod
+    restart: always
     container_name: smapper_app_prod
     build:
       args:
         API_URL: $API_URL
+        VITE_SERVICES_POLLING_INTERVAL: 1000 # 1 seconds
+        VITE_TOPICS_POLLING_INTERVAL: 2000 # 2 seconds
+        VITE_RECORDING_STATE_POLLING_INTERVAL: 1000 # 1 seconds
       context: .
+      network: host
     ports:
       - '80:80'
