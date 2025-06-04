@@ -36,22 +36,24 @@ export default function TopicWidget() {
   return (
     <WidgetSkeleton loading={loading}>
       <Widget title="Topics Monitor">
-        <Table.Root variant="outline">
-          <Table.Header>
-            <Table.Row>
-              <Table.ColumnHeader>Name</Table.ColumnHeader>
-              <Table.ColumnHeader hideBelow={'md'}>Type</Table.ColumnHeader>
-              <Table.ColumnHeader>Status</Table.ColumnHeader>
-              <Table.ColumnHeader hideBelow={'md'}>Subs</Table.ColumnHeader>
-              <Table.ColumnHeader textAlign="end">Hz</Table.ColumnHeader>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            {topics?.map((topic) => (
-              <TopicItem key={topic.name} service={topic} />
-            ))}
-          </Table.Body>
-        </Table.Root>
+        <Table.ScrollArea borderWidth="1px" maxW="xl">
+          <Table.Root variant="outline">
+            <Table.Header>
+              <Table.Row>
+                <Table.ColumnHeader textWrap="wrap">Name</Table.ColumnHeader>
+                <Table.ColumnHeader hideBelow={'md'}>Type</Table.ColumnHeader>
+                <Table.ColumnHeader>Status</Table.ColumnHeader>
+                <Table.ColumnHeader hideBelow={'md'}>Subs</Table.ColumnHeader>
+                <Table.ColumnHeader textAlign="md">Hz</Table.ColumnHeader>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              {topics?.map((topic) => (
+                <TopicItem key={topic.name} service={topic} />
+              ))}
+            </Table.Body>
+          </Table.Root>
+        </Table.ScrollArea>
       </Widget>
     </WidgetSkeleton>
   )
