@@ -1,5 +1,21 @@
 services:
-  smapper_app_prod:
+  app_dev:
+    image: smapper_app:dev
+    container_name: smapper_app_dev
+    build:
+      args:
+        API_URL: http://localhost:8000/api/v1
+        VITE_SERVICES_POLLING_INTERVAL: 1000 # 1 seconds
+        VITE_TOPICS_POLLING_INTERVAL: 2000 # 2 seconds
+        VITE_RECORDING_STATE_POLLING_INTERVAL: 1000 # 1 seconds
+      context: .
+      network: host
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+    ports:
+      - 80:80
+
+  app_prod:
     image: smapper_app:prod
     restart: always
     container_name: smapper_app_prod
@@ -11,5 +27,7 @@ services:
         VITE_RECORDING_STATE_POLLING_INTERVAL: 1000 # 1 seconds
       context: .
       network: host
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
     ports:
-      - '80:80'
+      - 80:80
