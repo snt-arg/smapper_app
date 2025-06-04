@@ -5,6 +5,7 @@ services:
     build:
       args:
         API_URL: http://localhost:8000/api/v1
+        ROSBOARD_URL: http://localhost:8888
         VITE_SERVICES_POLLING_INTERVAL: 1000 # 1 seconds
         VITE_TOPICS_POLLING_INTERVAL: 2000 # 2 seconds
         VITE_RECORDING_STATE_POLLING_INTERVAL: 1000 # 1 seconds
@@ -22,6 +23,7 @@ services:
     build:
       args:
         API_URL: $API_URL
+        API_URL: $ROSBOARD_URL
         VITE_SERVICES_POLLING_INTERVAL: 1000 # 1 seconds
         VITE_TOPICS_POLLING_INTERVAL: 2000 # 2 seconds
         VITE_RECORDING_STATE_POLLING_INTERVAL: 1000 # 1 seconds

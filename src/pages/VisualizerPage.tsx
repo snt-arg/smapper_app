@@ -1,8 +1,10 @@
 function VisualizerPage() {
+  const rosboard_url = import.meta.env.VITE_ROSBOARD_URL as string
+
   return (
     <div style={{ width: '100%', height: '100vh', border: 'none' }}>
       <iframe
-        src="http://localhost:8888"
+        src={rosboard_url}
         title="Embedded Website"
         width="100%"
         height="100%"
