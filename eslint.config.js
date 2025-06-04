@@ -36,6 +36,7 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
+      'react-dom/no-unsafe-iframe-sandbox': 'off',
     },
   }
 )
