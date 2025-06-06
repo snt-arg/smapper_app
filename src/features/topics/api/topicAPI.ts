@@ -4,7 +4,17 @@ import { TopicStatus } from '../types/Topic'
 async function getTopics(): Promise<TopicStatus[]> {
   const response = await client.get('/ros/topics')
   if (response.status === 200) {
-    return response.data as TopicStatus[]
+    const data = response.data as TopicStatus[]
+    return data.sort()
+  }
+  throw new Error('Failed to fetch topics')
+}
+
+async function getAllTopics(): Promise<TopicStatus[]> {
+  const response = await client.get('/ros/topics/?all=true')
+  if (response.status === 200) {
+    const data = response.data as TopicStatus[]
+    return data.sort()
   }
   throw new Error('Failed to fetch topics')
 }
