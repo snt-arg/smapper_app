@@ -1,8 +1,20 @@
 import { useState } from 'react'
-import { Box, Text, Drawer, CloseButton, Flex, HStack } from '@chakra-ui/react'
+import { Power } from 'lucide-react'
+import {
+  Box,
+  Text,
+  Drawer,
+  CloseButton,
+  Flex,
+  HStack,
+  Menu,
+  Button,
+  Portal,
+} from '@chakra-ui/react'
 import { Navigation, NavLink } from './Navigation.tsx'
 import { ColorModeButton } from '@/shared/components/ui/color-mode.tsx'
 import BurgerButton from '@/features/sidebar/components/BurgerButton.tsx'
+import OnboardAPI from '@/features/onboard/api'
 
 function Mobilebar({ links }: { links: NavLink[] }) {
   const [isSidebarOpen, setSidebarOpen] = useState(false)
@@ -35,6 +47,38 @@ function Mobilebar({ links }: { links: NavLink[] }) {
           <Drawer.Header></Drawer.Header>
           <Drawer.Body mt={35}>
             <Navigation links={links} onClick={() => setSidebarOpen(false)} />
+
+            <Menu.Root>
+              <Menu.Trigger asChild>
+                <Button
+                  position="absolute"
+                  bottom={0}
+                  right={0}
+                  m="3"
+                  variant="outline"
+                >
+                  <Power />
+                </Button>
+              </Menu.Trigger>
+              <Menu.Positioner>
+                <Menu.Content>
+                  <Menu.Item
+                    value="reboot"
+                    onClick={() => OnboardAPI.sendRebootSignal()}
+                  >
+                    Reboot
+                  </Menu.Item>
+                  <Menu.Item
+                    value="poweroff"
+                    color="fg.error"
+                    _hover={{ bg: 'bg.error', color: 'fg.error' }}
+                    onClick={() => OnboardAPI.sendPoweroffSignal()}
+                  >
+                    Power off
+                  </Menu.Item>
+                </Menu.Content>
+              </Menu.Positioner>
+            </Menu.Root>
           </Drawer.Body>
           <Drawer.CloseTrigger asChild>
             <Flex
