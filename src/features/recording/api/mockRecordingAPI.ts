@@ -1,4 +1,4 @@
-import { RecordingStatus } from '@/features/recording/types/Recording'
+import { Presets, RecordingStatus } from '@/features/recording/types/Recording'
 import { RosbagMetadata } from '@/features/rosbags/types/Rosbag'
 
 const recordingStatus: RecordingStatus = { state: 'Idle' }
@@ -10,6 +10,17 @@ function getRecordingStatus(): Promise<RecordingStatus> {
         throw Error('Recording session is not running')
       }
       resolve(recordingStatus)
+    }, 200)
+  })
+}
+
+function getRecordingPresets(): Promise<Presets> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        cameras: ['/camera/front_right/image_raw'],
+        lidar: ['/ouster/points', '/ouster/imu'],
+      })
     }, 200)
   })
 }
@@ -66,10 +77,7 @@ export const RecordingAPI = {
   getRecordingStatus,
   startRecording,
   stopRecording,
+  getRecordingPresets,
 }
 
-export default {
-  getRecordingStatus,
-  startRecording,
-  stopRecording,
-}
+export default RecordingAPI

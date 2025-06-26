@@ -11,22 +11,29 @@ import {
   Textarea,
   Select,
   createListCollection,
+  Badge,
 } from '@chakra-ui/react'
-import { RecordingStartRequest } from '@/features/recording/types/Recording'
+import {
+  Presets,
+  RecordingStartRequest,
+} from '@/features/recording/types/Recording'
 import { FieldValues, useForm } from 'react-hook-form'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { TopicStatus } from '@/features/topics/types/Topic'
 import usePolling from '@/shared/hooks/usePolling'
 import TopicAPI from '@/features/topics/api'
+import RecordingAPI from '@/features/recording/api'
 
 function NewRecordingForm({
   onStart,
   onClose,
   topics,
+  presets,
 }: {
   onStart: (data: RecordingStartRequest) => void
   onClose: () => void
   topics: TopicStatus[]
+  presets: Presets
 }) {
   const { register, handleSubmit } = useForm()
   const [selectedTopics, setSelectedTopics] = useState<string[]>([])
@@ -34,6 +41,7 @@ function NewRecordingForm({
   const onSubmit = (data: FieldValues) => {
     const raw_tags: string = data.tags as string
     const tags: string[] = raw_tags.split(',').map((tag) => tag.trim())
+    console.log('Selected Topics:', selectedTopics)
 
     const bag: RecordingStartRequest = {
       name: data.name as string,
@@ -44,6 +52,27 @@ function NewRecordingForm({
 
     onStart(bag)
     onClose()
+  }
+
+  const [activePresets, setActivePresets] = useState<string[]>([])
+
+  const togglePreset = (presetName: string) => {
+    const topicsFromPreset = presets[presetName] || []
+    const isActive = activePresets.includes(presetName)
+
+    if (isActive) {
+      setSelectedTopics((prev) =>
+        prev.filter((topic) => !topicsFromPreset.includes(topic))
+      )
+      setActivePresets((prev) => prev.filter((p) => p !== presetName))
+    } else {
+      setSelectedTopics((prev) =>
+        Array.from(new Set([...prev, ...topicsFromPreset]))
+      )
+      setActivePresets((prev) => [...prev, presetName])
+    }
+
+    console.log('Selected Topics:', selectedTopics)
   }
 
   const topicCollection = createListCollection({
@@ -85,6 +114,7 @@ function NewRecordingForm({
               collection={topicCollection}
               size="sm"
               width="320px"
+              value={selectedTopics}
               onValueChange={(selected) => {
                 setSelectedTopics(selected.value)
               }}
@@ -110,6 +140,21 @@ function NewRecordingForm({
                 </Select.Content>
               </Select.Positioner>
             </Select.Root>
+            <Stack direction="row" spaceX={2} mt={2}>
+              {Object.keys(presets).map((presetKey) => (
+                <Badge
+                  key={presetKey}
+                  variant="solid"
+                  cursor="pointer"
+                  colorPalette={
+                    activePresets.includes(presetKey) ? 'blue' : 'gray'
+                  }
+                  onClick={() => togglePreset(presetKey)}
+                >
+                  {presetKey}
+                </Badge>
+              ))}
+            </Stack>
           </Field.Root>
         </Fieldset.Content>
       </Fieldset.Root>
@@ -139,6 +184,16 @@ export default function RecordingModal({
     5000,
     true
   )
+
+  const [presets, setPresets] = useState<Presets | null>(null)
+
+  useEffect(() => {
+    const fetchPresets = async () => {
+      const response = await RecordingAPI.getRecordingPresets()
+      setPresets(response)
+    }
+    void fetchPresets()
+  }, [])
 
   return (
     <Dialog.Root open={modalOpen} size="lg">
@@ -173,6 +228,7 @@ export default function RecordingModal({
                 onStart={onStart}
                 onClose={() => setModalOpen(!modalOpen)}
                 topics={topics ? topics : []}
+                presets={presets ? presets : {}}
               />
             </Dialog.Body>
 

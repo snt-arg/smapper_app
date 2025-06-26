@@ -47,3 +47,5 @@ export interface RecordingStatus {
   state: string
   metadata?: RecordingMetadata
 }
+
+export type Presets = Record<string, string[]>
