@@ -41,7 +41,6 @@ function NewRecordingForm({
   const onSubmit = (data: FieldValues) => {
     const raw_tags: string = data.tags as string
     const tags: string[] = raw_tags.split(',').map((tag) => tag.trim())
-    console.log('Selected Topics:', selectedTopics)
 
     const bag: RecordingStartRequest = {
       name: data.name as string,
@@ -76,9 +75,7 @@ function NewRecordingForm({
   }
 
   const topicCollection = createListCollection({
-    items: topics
-      .sort()
-      .map((topic) => ({ label: topic.name, value: topic.name })),
+    items: topics.map((topic) => ({ label: topic.name, value: topic.name })),
   })
 
   return (

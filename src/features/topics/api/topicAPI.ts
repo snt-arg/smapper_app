@@ -14,7 +14,7 @@ async function getAllTopics(): Promise<TopicStatus[]> {
   const response = await client.get('/ros/topics/?all=true')
   if (response.status === 200) {
     const data = response.data as TopicStatus[]
-    return data.sort()
+    return data.slice().sort((a, b) => a.name.localeCompare(b.name))
   }
   throw new Error('Failed to fetch topics')
 }
