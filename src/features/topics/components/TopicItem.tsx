@@ -12,6 +12,5 @@ export const TopicItem = ({ service: topic }: { service: TopicStatus }) => (
     <Table.Cell hideBelow={'md'} textAlign="center">
       {topic.subscribers}
     </Table.Cell>
-    <Table.Cell hideBelow={'md'}>{topic.msg_type}</Table.Cell>
   </Table.Row>
 )
