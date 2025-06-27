@@ -39,7 +39,7 @@ export default function TopicWidget() {
           <Table.Root variant="outline">
             <Table.Header>
               <Table.Row>
-                <Table.ColumnHeader textWrap="wrap">Name</Table.ColumnHeader>
+                <Table.ColumnHeader>Name</Table.ColumnHeader>
                 <Table.ColumnHeader>Status</Table.ColumnHeader>
                 <Table.ColumnHeader textAlign="md">Hz</Table.ColumnHeader>
                 <Table.ColumnHeader hideBelow={'md'}>Subs</Table.ColumnHeader>
