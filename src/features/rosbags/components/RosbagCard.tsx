@@ -1,5 +1,6 @@
 import {
   RosbagMetadata,
+  RosbagMetadatUpdate,
   // RosbagMetadatUpdate,
 } from '@/features/rosbags/types/Rosbag'
 import {
@@ -15,8 +16,9 @@ import {
   Flex,
   Stack,
 } from '@chakra-ui/react'
-import { DatabaseIcon, TimerIcon } from 'lucide-react'
+import { DatabaseIcon, TimerIcon, DownloadIcon } from 'lucide-react'
 import { useState } from 'react'
+import UpdateRosbagModal from './UpdateRosbagModal'
 
 const formatTimestamp = (timestamp: number): string => {
   const date = new Date(timestamp * 1000)
@@ -76,57 +78,75 @@ const Body = ({ rosbag }: { rosbag: RosbagMetadata }) => {
 const Footer = ({
   rosbag,
   onDelete,
-  // onUpdate,
+  onUpdate,
 }: {
   rosbag: RosbagMetadata
   onDelete: (id: number) => void
-  // onUpdate: (id: number, data: RosbagMetadatUpdate) => void
-}) => (
-  <Card.Footer flexDir="column" spaceY="2">
-    <HStack justifyContent="space-between" w="100%">
-      <Tag.Root variant="solid" colorPalette="blue">
-        <Tag.StartElement>
-          <TimerIcon />
-        </Tag.StartElement>
-        <Tag.Label>{formatDuration(rosbag.duration)}</Tag.Label>
-      </Tag.Root>
+  onUpdate: (id: number, data: RosbagMetadatUpdate) => void
+}) => {
+  const onDownload = () => {
+    const downloadUrl = `${import.meta.env.VITE_API_BASE_URL}/rosbags/${rosbag.id}/download`
+    const link = document.createElement('a')
+    link.href = downloadUrl
+    link.download = `${rosbag.name || rosbag.id}.zip`
+    link.click()
+  }
 
-      <Tag.Root variant="solid" colorPalette="blue">
-        <Tag.StartElement>
-          <DatabaseIcon />
-        </Tag.StartElement>
-        <Tag.Label>{formatSize(rosbag.size)}</Tag.Label>
-      </Tag.Root>
-    </HStack>
+  return (
+    <Card.Footer flexDir="column" spaceY="2">
+      <HStack justifyContent="space-between" w="100%">
+        <Tag.Root variant="solid" colorPalette="blue">
+          <Tag.StartElement>
+            <TimerIcon />
+          </Tag.StartElement>
+          <Tag.Label>{formatDuration(rosbag.duration)}</Tag.Label>
+        </Tag.Root>
 
-    <HStack wrap="wrap" w="100%">
-      {rosbag.tags &&
-        rosbag.tags !== '' &&
-        rosbag.tags?.split(',').map((tag) => (
-          <Badge variant="outline" textStyle="sm" key={tag}>
-            {tag}
-          </Badge>
-        ))}
-    </HStack>
+        <Tag.Root variant="solid" colorPalette="blue">
+          <Tag.StartElement>
+            <DatabaseIcon />
+          </Tag.StartElement>
+          <Tag.Label>{formatSize(rosbag.size)}</Tag.Label>
+        </Tag.Root>
+      </HStack>
 
-    <HStack w="100%" justifyContent="flex-end">
-      <Button variant="outline" onClick={() => onDelete(rosbag.id)}>
-        Delete
-      </Button>
-      {/* TODO: we must create another modal for updating card*/}
-      <Button>Update</Button>
-    </HStack>
-  </Card.Footer>
-)
+      <HStack wrap="wrap" w="100%">
+        {rosbag.tags &&
+          rosbag.tags !== '' &&
+          rosbag.tags?.split(',').map((tag) => (
+            <Badge variant="outline" textStyle="sm" key={tag}>
+              {tag}
+            </Badge>
+          ))}
+      </HStack>
+
+      <HStack w="100%" justifyContent="flex-start">
+        <Button justifyContent="flex-start" onClick={() => onDownload()}>
+          <DownloadIcon />
+        </Button>
+
+        <HStack w="100%" justifyContent="flex-end">
+          <Button variant="outline" onClick={() => onDelete(rosbag.id)}>
+            Delete
+          </Button>
+          <UpdateRosbagModal
+            rosbag={rosbag}
+            onUpdate={(updatedData) => onUpdate(rosbag.id, updatedData)}
+          />
+        </HStack>
+      </HStack>
+    </Card.Footer>
+  )
+}
 
 export default function RosbagCard({
   rosbag,
   onDelete,
-  // onUpdate,
+  onUpdate,
 }: {
   rosbag: RosbagMetadata
   onDelete: (id: number) => void
-  // onUpdate?: (id: number, data: RosbagMetadatUpdate) => void
+  onUpdate: (id: number, data: RosbagMetadatUpdate) => void
 }) {
   return (
     <Card.Root variant="subtle" maxW="lg">
@@ -137,7 +157,7 @@ export default function RosbagCard({
         </HStack>
       </Card.Header>
       <Body rosbag={rosbag} />
-      <Footer rosbag={rosbag} onDelete={onDelete} />
+      <Footer rosbag={rosbag} onDelete={onDelete} onUpdate={onUpdate} />
     </Card.Root>
   )
 }

@@ -1,4 +1,7 @@
-import { RosbagMetadata } from '@/features/rosbags/types/Rosbag'
+import {
+  RosbagMetadata,
+  RosbagMetadatUpdate,
+} from '@/features/rosbags/types/Rosbag'
 
 function getRosbags(): Promise<RosbagMetadata[]> {
   return new Promise((resolve) => {
@@ -32,17 +35,37 @@ function deleteRosbag(id: number): Promise<void> {
   })
 }
 
+function updateRosbag(
+  id: number,
+  data: Partial<RosbagMetadatUpdate>
+): Promise<RosbagMetadata> {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const index = rosbags.findIndex((item) => item.id === id)
+      if (index === -1) {
+        reject(new Error('Rosbag not found'))
+        return
+      }
+      // Only update known fields (safe patch)
+      const rosbag = rosbags[index]
+      rosbags[index] = {
+        ...rosbag,
+        // ...data,
+      }
+      console.log(data)
+      resolve(rosbags[index])
+    }, 200)
+  })
+}
+
 export const RosbagAPI = {
   getRosbags,
   getRosbag,
   deleteRosbag,
+  updateRosbag,
 }
 
-export default {
-  getRosbags,
-  getRosbag,
-  deleteRosbag,
-}
+export default RosbagAPI
 
 const rosbags: RosbagMetadata[] = [
   {

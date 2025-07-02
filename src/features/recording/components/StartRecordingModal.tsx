@@ -41,7 +41,6 @@ function NewRecordingForm({
   const onSubmit = (data: FieldValues) => {
     const raw_tags: string = data.tags as string
     const tags: string[] = raw_tags.split(',').map((tag) => tag.trim())
-    console.log('Selected Topics:', selectedTopics)
 
     const bag: RecordingStartRequest = {
       name: data.name as string,
@@ -82,7 +81,14 @@ function NewRecordingForm({
   })
 
   return (
-    <Box as="form" onSubmit={handleSubmit(onSubmit)}>
+    <Box
+      as="form"
+      onSubmit={(e) => {
+        // Prevent default form submission
+        e.preventDefault()
+        void handleSubmit(onSubmit)(e)
+      }}
+    >
       <Fieldset.Root>
         <Fieldset.Content>
           <Field.Root required>

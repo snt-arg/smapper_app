@@ -17,7 +17,7 @@ import {
 } from '@/features/recording/types/Recording'
 import StartRecordingModal from '@/features/recording/components/StartRecordingModal'
 import RosbagAPI from '../api'
-import { RosbagMetadata } from '../types/Rosbag'
+import { RosbagMetadata, RosbagMetadatUpdate } from '../types/Rosbag'
 
 enum RecordingActionKind {
   UPDATE,
@@ -91,6 +91,20 @@ export default function RosbagList() {
     })
   }
 
+  const handleUpdate = (id: number, data: Partial<RosbagMetadatUpdate>) => {
+    const callUpdate = async () => {
+      try {
+        const updated = await RosbagAPI.updateRosbag(id, data)
+        setData((prev) => prev.map((bag) => (bag.id === id ? updated : bag)))
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    callUpdate().catch((err) => {
+      console.error(err)
+    })
+  }
+
   const handleStartRecording = async (bag: RecordingStartRequest) => {
     try {
       await RecordingAPI.startRecording(bag)
@@ -158,7 +172,12 @@ export default function RosbagList() {
 
       <SimpleGrid columns={columns} gap="4" pt="4">
         {state.rosbags?.map((rosbag) => (
-          <RosbagCard rosbag={rosbag} key={rosbag.id} onDelete={handleDelete} />
+          <RosbagCard
+            rosbag={rosbag}
+            key={rosbag.id}
+            onDelete={handleDelete}
+            onUpdate={handleUpdate}
+          />
         ))}
       </SimpleGrid>
     </Skeleton>

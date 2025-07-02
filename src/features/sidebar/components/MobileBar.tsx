@@ -9,7 +9,6 @@ import {
   HStack,
   Menu,
   Button,
-  Portal,
 } from '@chakra-ui/react'
 import { Navigation, NavLink } from './Navigation.tsx'
 import { ColorModeButton } from '@/shared/components/ui/color-mode.tsx'
