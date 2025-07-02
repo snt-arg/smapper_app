@@ -4,7 +4,7 @@ import TopicStatusBadge from './TopicStatusBadge'
 
 export const TopicItem = ({ service: topic }: { service: TopicStatus }) => (
   <Table.Row>
-    <Table.Cell>{topic.name}</Table.Cell>
+    <Table.Cell textWrap="wrap" wordBreak="break-word" >{topic.name}</Table.Cell>
     <Table.Cell>
       <TopicStatusBadge status={topic.status} />
     </Table.Cell>
@@ -12,6 +12,5 @@ export const TopicItem = ({ service: topic }: { service: TopicStatus }) => (
     <Table.Cell hideBelow={'md'} textAlign="center">
       {topic.subscribers}
     </Table.Cell>
-    <Table.Cell hideBelow={'md'}>{topic.msg_type}</Table.Cell>
   </Table.Row>
 )

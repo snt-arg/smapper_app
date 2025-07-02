@@ -36,15 +36,13 @@ export default function TopicWidget() {
   return (
     <WidgetSkeleton loading={loading}>
       <Widget title="Topics Monitor">
-        <Table.ScrollArea borderWidth="1px" maxW="xl">
           <Table.Root variant="outline">
             <Table.Header>
               <Table.Row>
-                <Table.ColumnHeader textWrap="wrap">Name</Table.ColumnHeader>
+                <Table.ColumnHeader>Name</Table.ColumnHeader>
                 <Table.ColumnHeader>Status</Table.ColumnHeader>
                 <Table.ColumnHeader textAlign="md">Hz</Table.ColumnHeader>
                 <Table.ColumnHeader hideBelow={'md'}>Subs</Table.ColumnHeader>
-                <Table.ColumnHeader hideBelow={'md'}>Type</Table.ColumnHeader>
               </Table.Row>
             </Table.Header>
             <Table.Body>
@@ -53,7 +51,6 @@ export default function TopicWidget() {
               ))}
             </Table.Body>
           </Table.Root>
-        </Table.ScrollArea>
       </Widget>
     </WidgetSkeleton>
   )
