@@ -37,6 +37,10 @@ function NewRecordingForm({
 }) {
   const { register, handleSubmit } = useForm()
   const [selectedTopics, setSelectedTopics] = useState<string[]>([])
+  const [activePresets, setActivePresets] = useState<string[]>([])
+  const [compressionEnabled, setCompressionEnabled] = useState(false)
+  const [compressionFormat, setCompressionFormat] = useState('zstd')
+  const [compressionMode, setCompressionMode] = useState('file')
 
   const onSubmit = (data: FieldValues) => {
     const raw_tags: string = data.tags as string
@@ -47,13 +51,16 @@ function NewRecordingForm({
       detail: data.detail as string,
       tags: tags,
       topics: selectedTopics,
+      compression: {
+        enabled: compressionEnabled,
+        format: compressionFormat,
+        mode: compressionMode,
+      },
     }
 
     onStart(bag)
     onClose()
   }
-
-  const [activePresets, setActivePresets] = useState<string[]>([])
 
   const togglePreset = (presetName: string) => {
     const topicsFromPreset = presets[presetName] || []
@@ -112,6 +119,91 @@ function NewRecordingForm({
             />
             <Field.HelperText>Separate tags with comma</Field.HelperText>
           </Field.Root>
+
+          <Field.Root>
+            <Field.Label>Compression Settings</Field.Label>
+            <Stack spaceY={2} w="100%">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={compressionEnabled}
+                  onChange={(e) => {
+                    const checked = e.target.checked
+                    setCompressionEnabled(checked)
+                  }}
+                />{' '}
+                Enable compression
+              </label>
+
+              {compressionEnabled && (
+                <Stack direction="row" spaceX={4}>
+                  {/* Format Selector */}
+                  <Select.Root
+                    collection={createListCollection({
+                      items: [{ label: 'zstd', value: 'zstd' }],
+                    })}
+                    value={[compressionFormat]}
+                    onValueChange={(v) => setCompressionFormat(v.value[0])}
+                  >
+                    <Select.HiddenSelect name="compression.format" />
+                    <Select.Label>Format</Select.Label>
+                    <Select.Control>
+                      <Select.Trigger>
+                        <Select.ValueText placeholder="Select format" />
+                      </Select.Trigger>
+                      <Select.IndicatorGroup>
+                        <Select.Indicator />
+                      </Select.IndicatorGroup>
+                    </Select.Control>
+                    <Select.Positioner>
+                      <Select.Content>
+                        <Select.Item item={{ label: 'zstd', value: 'zstd' }}>
+                          zstd
+                          <Select.ItemIndicator />
+                        </Select.Item>
+                      </Select.Content>
+                    </Select.Positioner>
+                  </Select.Root>
+
+                  {/* Mode Selector */}
+                  <Select.Root
+                    collection={createListCollection({
+                      items: [
+                        { label: 'file', value: 'file' },
+                        { label: 'message', value: 'message' },
+                      ],
+                    })}
+                    value={[compressionMode]}
+                    onValueChange={(v) => setCompressionMode(v.value[0])}
+                  >
+                    <Select.HiddenSelect name="compression.mode" />
+                    <Select.Label>Mode</Select.Label>
+                    <Select.Control>
+                      <Select.Trigger>
+                        <Select.ValueText placeholder="Select mode" />
+                      </Select.Trigger>
+                      <Select.IndicatorGroup>
+                        <Select.Indicator />
+                      </Select.IndicatorGroup>
+                    </Select.Control>
+                    <Select.Positioner>
+                      <Select.Content>
+                        <Select.Item item={{ label: 'file', value: 'file' }}>
+                          file
+                          <Select.ItemIndicator />
+                        </Select.Item>
+                        <Select.Item item={{ label: 'message', value: 'message' }}>
+                          message
+                          <Select.ItemIndicator />
+                        </Select.Item>
+                      </Select.Content>
+                    </Select.Positioner>
+                  </Select.Root>
+                </Stack>
+              )}
+            </Stack>
+          </Field.Root>
+
           <Field.Root required>
             <Select.Root
               multiple

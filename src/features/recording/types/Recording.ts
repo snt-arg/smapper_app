@@ -19,6 +19,20 @@ export interface RecordingMetadata {
 }
 
 /**
+ * Represents the compression settings to be used by ros2 bag.
+ *
+ * @interface BagRecorderCompressionSettings
+ * @property {boolean} name - The name of the recording session.
+ * @property {string} format - Compression format. Supported are zstd.
+ * @property {string} mode - Compression mode. Supported are file and message.
+ */
+export interface BagRecorderCompressionSettings {
+  enabled: boolean
+  format: string
+  mode: string
+}
+
+/**
  * Represents a request to start a recording session.
  * Contains necessary information to initiate the recording.
  *
@@ -27,12 +41,14 @@ export interface RecordingMetadata {
  * @property {string[]} topics - A list of topics to be captured during the recording.
  * @property {string} detail - A description or additional details for the recording session.
  * @property {string[]} [tags] - Optional list of tags for categorizing or identifying the recording.
+ * @property {BagRecorderCompressionSettings} compression - Compression settings.
  */
 export interface RecordingStartRequest {
   name: string
   topics: string[]
   detail: string
   tags?: string[]
+  compression: BagRecorderCompressionSettings
 }
 
 /**
