@@ -5,7 +5,7 @@ async function getTopics(): Promise<TopicStatus[]> {
   const response = await client.get('/ros/topics/')
   if (response.status === 200) {
     const data = response.data as TopicStatus[]
-    return data.sort()
+    return data?.sort()
   }
   throw new Error('Failed to fetch topics')
 }
